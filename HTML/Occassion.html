@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Occasions - PhoGator</title>
+    <link rel="stylesheet" href="../CSS/Header.css">
+    <link rel="stylesheet" href="../CSS/Occassion.css">
+    <link rel="stylesheet" href="../CSS/Footer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <!-- Include Header -->
+    <div id="header"></div>
+
+    <!-- Page Content -->
+    <section class="page-section">
+        <div class="page-container">
+            <h1 class="page-title">Perfect for Every Occasion</h1>
+            <p class="page-subtitle">PhoGator makes photo discovery seamless at any event</p>
+
+            <div class="occasions-grid">
+                <div class="occasion-card">
+                    <div class="occasion-icon">💒</div>
+                    <h3>Weddings</h3>
+                    <p>Capture every magical moment of your special day</p>
+                </div>
+
+                <div class="occasion-card">
+                    <div class="occasion-icon">🎓</div>
+                    <h3>Graduations</h3>
+                    <p>Find yourself in every celebration photo</p>
+                </div>
+
+                <div class="occasion-card">
+                    <div class="occasion-icon">🎉</div>
+                    <h3>Birthday Parties</h3>
+                    <p>Never miss a moment from your celebration</p>
+                </div>
+
+                <div class="occasion-card">
+                    <div class="occasion-icon">🏢</div>
+                    <h3>Corporate Events</h3>
+                    <p>Professional photos delivered instantly</p>
+                </div>
+
+                <div class="occasion-card">
+                    <div class="occasion-icon">🎭</div>
+                    <h3>Festivals</h3>
+                    <p>Find yourself in the crowd with ease</p>
+                </div>
+
+                <div class="occasion-card">
+                    <div class="occasion-icon">⚽</div>
+                    <h3>Sports Events</h3>
+                    <p>Get action shots featuring you</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Include Footer -->
+    <div id="footer"></div>
+
+    <script src="../JS/script.js"></script>
+    <script>
+        // Load Header
+        fetch('Header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header').innerHTML = data;
+            });
+
+        // Load Footer
+        fetch('Footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer').innerHTML = data;
+            });
+    </script>
+</body>
+</html>

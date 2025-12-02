@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Occasions - PhoGator</title>
+    <link rel="stylesheet" href="../CSS/Header.css">
+    <link rel="stylesheet" href="../CSS/OccasionsPage.css">
+    <link rel="stylesheet" href="../CSS/Footer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <!-- Include Header -->
+    <div id="header"></div>
+
+    <!-- Occasions Page -->
+    <section class="occasions-page">
+        <h1>Our Occasions</h1>
+        <p class="occasions-subtitle">Capture every special moment with PhoGator</p>
+
+        <div class="occasions-grid">
+            <div class="occasion-item">
+                <div class="occasion-image">
+                    <img src="../assets/images/brataman.jpg" alt="Bartamanda">
+                </div>
+                <div class="occasion-info">
+                    <h2>Bartamanda</h2>
+                    <p>Celebrate sacred thread ceremonies with beautiful captured memories.</p>
+                    <button class="cta-button" onclick="openModal('Bartamanda')">Book Now</button>
+                </div>
+            </div>
+
+            <div class="occasion-item">
+                <div class="occasion-image">
+                    <img src="../assets/images/wedding.jpg" alt="Wedding">
+                </div>
+                <div class="occasion-info">
+                    <h2>Wedding</h2>
+                    <p>Your special day deserves perfect photo memories. Let us help you find them all.</p>
+                    <button class="cta-button" onclick="openModal('Wedding')">Book Now</button>
+                </div>
+            </div>
+
+            <div class="occasion-item">
+                <div class="occasion-image">
+                    <img src="../assets/images/college.jpg" alt="College Events">
+                </div>
+                <div class="occasion-info">
+                    <h2>College Events</h2>
+                    <p>From fests to farewells and graduations, find every moment from your college events.</p>
+                    <button class="cta-button" onclick="openModal('College Events')">Book Now</button>
+                </div>
+            </div>
+
+            <div class="occasion-item">
+                <div class="occasion-image">
+                    <img src="../assets/images/birthday.jpg" alt="Birthday">
+                </div>
+                <div class="occasion-info">
+                    <h2>Birthday</h2>
+                    <p>Make birthday celebrations unforgettable with instant photo discovery.</p>
+                    <button class="cta-button" onclick="openModal('Birthday')">Book Now</button>
+                </div>
+            </div>
+
+            <div class="occasion-item">
+                <div class="occasion-image">
+                    <img src="../assets/images/concert.jpg" alt="Concert">
+                </div>
+                <div class="occasion-info">
+                    <h2>Concert</h2>
+                    <p>Experience the thrill of live music and capture every moment with ease.</p>
+                    <button class="cta-button" onclick="openModal('Concert')">Book Now</button>
+                </div>
+             </div>
+
+            <div class="occasion-item">
+                <div class="occasion-image">
+                    <img src="../assets/images/sports.jpg" alt="Sports Events">
+                </div>
+                <div class="occasion-info">
+                    <h2>Sports Events</h2>
+                    <p>Capture the action and find yourself in every winning moment.</p>
+                    <button class="cta-button" onclick="openModal('Sports Events')">Book Now</button>
+                </div>
+            </div>
+
+            <div class="occasion-item">
+                <div class="occasion-image">
+                    <img src="../assets/images/festival.jpg" alt="Festivals">
+                </div>
+                <div class="occasion-info">
+                    <h2>Festivals</h2>
+                    <p>From Diwali to Durga Puja, relive festive celebrations through your photos.</p>
+                    <button class="cta-button" onclick="openModal('Festivals')">Book Now</button>
+                </div>
+            </div>
+
+            <div class="occasion-item">
+                <div class="occasion-image">
+                    <img src="../assets/images/family-reunion.jpg" alt="Family Reunion">
+                </div>
+                <div class="occasion-info">
+                    <h2>Family Reunion</h2>
+                    <p>Precious family moments deserve to be preserved. Find everyone's photos effortlessly.</p>
+                    <button class="cta-button" onclick="openModal('Family Reunion')">Book Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Popup -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <h2 id="modalTitle">Book Your Event</h2>
+            <p>Fill in your details and we'll get back to you shortly.</p>
+            <form id="bookingForm" onsubmit="handleSubmit(event)">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <input type="tel" name="phone" placeholder="Your Phone Number" required>
+                <input type="date" name="eventDate" placeholder="Event Date" required>
+                <textarea name="message" placeholder="Additional Details (Optional)"></textarea>
+                <button type="submit" class="modal-submit">Submit Booking Request</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Include Footer -->
+    <div id="footer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load Header
+            fetch('./Header.html')
+                .then(response => response.text())
+                .then(data => document.getElementById('header').innerHTML = data);
+
+            // Load Footer
+            fetch('./Footer.html')
+                .then(response => response.text())
+                .then(data => document.getElementById('footer').innerHTML = data);
+        });
+
+        function openModal(occasionType) {
+            const modal = document.getElementById('bookingModal');
+            const modalTitle = document.getElementById('modalTitle');
+            modalTitle.textContent = `Book ${occasionType}`;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('bookingModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            // Add your form submission logic here
+            alert('Thank you! Your booking request has been submitted.');
+            closeModal();
+            document.getElementById('bookingForm').reset();
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('bookingModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>

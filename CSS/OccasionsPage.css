@@ -1,0 +1,301 @@
+.occasions-page {
+    padding: 8rem 3rem 5rem;
+    background: linear-gradient(180deg, #f8f9fa 0%, #e8dff5 100%);
+    min-height: 100vh;
+}
+
+.occasions-page h1 {
+    text-align: center;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #1a1a1a;
+    font-weight: 700;
+    font-family: 'Amaranth', sans-serif;
+}
+
+.occasions-subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 4rem;
+}
+
+.occasions-grid {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+    padding: 0 2rem;
+}
+
+.occasion-item {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.occasion-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.occasion-image {
+    width: 100%;
+    height: 350px;
+    overflow: hidden;
+}
+
+.occasion-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.occasion-item:hover .occasion-image img {
+    transform: scale(1.1);
+}
+
+.occasion-info {
+    padding: 2rem;
+    text-align: center;
+}
+
+.occasion-info h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #1a1a1a;
+    font-weight: 600;
+}
+
+.occasion-info p {
+    color: #666;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.cta-button {
+    background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+    color: white;
+    border: none;
+    padding: 1rem 2.5rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4);
+}
+
+/* Modal Popup - FIXED CENTER */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+}
+
+.modal.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 20px;
+    padding: 3rem;
+    max-width: 500px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4);
+    animation: modalSlideIn 0.3s ease;
+    position: relative;
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 2rem;
+    color: #666;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s;
+    z-index: 10;
+}
+
+.modal-close:hover {
+    background: #f0f0f0;
+    color: #333;
+    transform: rotate(90deg);
+}
+
+.modal-content h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #1a1a1a;
+    text-align: center;
+    padding-right: 40px;
+}
+
+.modal-content p {
+    color: #666;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.modal-content input,
+.modal-content textarea {
+    padding: 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s;
+    font-family: inherit;
+}
+
+.modal-content input:focus,
+.modal-content textarea:focus {
+    outline: none;
+    border-color: #7c3aed;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+.modal-content textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.modal-submit {
+    background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 1rem;
+}
+
+.modal-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(124, 58, 237, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .occasions-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2.5rem;
+    }
+}
+
+@media (max-width: 968px) {
+    .occasions-page {
+        padding: 6rem 2rem 4rem;
+    }
+
+    .occasions-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 0 1rem;
+    }
+
+    .occasions-page h1 {
+        font-size: 2.5rem;
+    }
+
+    .occasion-image {
+        height: 280px;
+    }
+
+    .modal-content {
+        padding: 2.5rem 2rem;
+        width: 95%;
+    }
+}
+
+@media (max-width: 640px) {
+    .occasions-page {
+        padding: 5rem 1rem 3rem;
+    }
+
+    .occasions-page h1 {
+        font-size: 2rem;
+    }
+
+    .occasions-subtitle {
+        font-size: 1rem;
+        margin-bottom: 3rem;
+    }
+
+    .occasion-info h2 {
+        font-size: 1.5rem;
+    }
+
+    .occasion-info p {
+        font-size: 1rem;
+    }
+
+    .occasion-image {
+        height: 220px;
+    }
+
+    .modal-content {
+        padding: 2rem 1.5rem;
+    }
+
+    .modal-content h2 {
+        font-size: 1.5rem;
+        padding-right: 35px;
+    }
+
+    .modal-content p {
+        font-size: 0.95rem;
+    }
+}
