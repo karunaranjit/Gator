@@ -1,0 +1,241 @@
+/* What is PhoGator Section */
+.what-is-phogator {
+    padding: 6rem 2rem;
+    background: #f4efeb;
+}
+
+.phogator-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.what-is-phogator h2 {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    color: #1a1a1a;
+    font-weight: 700;
+    font-family: 'Amaranth', sans-serif;
+}
+
+.phogator-description {
+    font-size: 1.3rem;
+    color: #666;
+    line-height: 1.8;
+    margin-bottom: 4rem;
+    max-width: 1000px;
+}
+
+.features-wrapper {
+    position: relative;
+    min-height: 600px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, auto);
+    gap: 2rem;
+    align-items: center;
+}
+
+.feature-card {
+    background: #FAF1E1;
+    padding: 1.5rem 2.5rem;
+    border-radius: 50px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    transition: all 0.3s ease;
+    cursor: default;
+    width: 100%;
+    min-width: 280px;
+    max-width: 350px;
+    justify-self: center;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.feature-card i {
+    font-size: 2rem;
+    color: #1a1a1a;
+    flex-shrink: 0;
+}
+
+.feature-card h3 {
+    font-size: 1.2rem;
+    color: #1a1a1a;
+    font-weight: 600;
+    margin: 0;
+    white-space: nowrap;
+}
+
+.feature-top-left {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.feature-top-right {
+    grid-column: 3;
+    grid-row: 1;
+}
+
+.feature-middle-left {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.feature-middle-right {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+.feature-bottom {
+    grid-column: 2;
+    grid-row: 3;
+    justify-self: center;
+}
+
+.center-illustration {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.center-illustration img {
+    max-width: 400px;
+    width: 100%;
+    height: auto;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .features-wrapper {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+        gap: 1.5rem;
+    }
+
+    .feature-top-left {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .feature-top-right {
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    .center-illustration {
+        grid-column: 1 / 3;
+        grid-row: 2;
+    }
+
+    .feature-middle-left {
+        grid-column: 1;
+        grid-row: 3;
+    }
+
+    .feature-middle-right {
+        grid-column: 2;
+        grid-row: 3;
+    }
+
+    .feature-bottom {
+        grid-column: 1 / 3;
+        grid-row: 4;
+    }
+
+    .center-illustration img {
+        max-width: 350px;
+    }
+}
+
+@media (max-width: 968px) {
+    .what-is-phogator {
+        padding: 4rem 2rem;
+    }
+
+    .what-is-phogator h2 {
+        font-size: 2.5rem;
+    }
+
+    .phogator-description {
+        font-size: 1.1rem;
+        margin-bottom: 3rem;
+    }
+
+    .feature-card {
+        padding: 1.2rem 2rem;
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+        max-width: 100%;
+    }
+
+    .feature-card h3 {
+        white-space: normal;
+    }
+
+    .feature-card i {
+        font-size: 1.8rem;
+    }
+
+    .feature-card h3 {
+        font-size: 1.1rem;
+    }
+
+    .center-illustration img {
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 640px) {
+    .what-is-phogator {
+        padding: 3rem 1rem;
+    }
+
+    .what-is-phogator h2 {
+        font-size: 2rem;
+    }
+
+    .phogator-description {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .features-wrapper {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .feature-top-left,
+    .feature-top-right,
+    .feature-middle-left,
+    .feature-middle-right,
+    .feature-bottom,
+    .center-illustration {
+        grid-column: 1;
+        grid-row: auto;
+    }
+
+    .feature-card {
+        padding: 1rem 1.5rem;
+        min-width: auto;
+    }
+
+    .feature-card i {
+        font-size: 1.6rem;
+    }
+
+    .feature-card h3 {
+        font-size: 1rem;
+    }
+
+    .center-illustration img {
+        max-width: 250px;
+    }
+}

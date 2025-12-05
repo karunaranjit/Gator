@@ -1,174 +1,709 @@
 /* Occasions Section */
-.occasions {
-    padding: 5rem 2rem;
-    background: #d4c5f9;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Hero Slider Section */
+.occasions-hero {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    padding: 8rem 2rem 5rem;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.occasions-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.occasion-slider {
+    position: relative;
+    background: white;
+    border-radius: 20px;
+    padding: 3rem;
+    min-height: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
+}
+
+.slider-content {
+    width: 100%;
+    max-width: 900px;
     position: relative;
 }
 
-.occasions h2 {
-    text-align: center;
+.occasion-image-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.occasion-image {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+.slider-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 60px;
+    height: 60px;
+    background: white;
+    border: 3px solid #667eea;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.slider-nav:hover {
+    background: #667eea;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.slider-nav:hover i {
+    color: white;
+}
+
+.slider-nav.prev {
+    left: -80px;
+}
+
+.slider-nav.next {
+    right: -80px;
+}
+
+.slider-nav i {
+    font-size: 1.5rem;
+    color: #667eea;
+    transition: color 0.3s;
+}
+
+.occasion-info {
+    text-align: left;
+}
+
+.occasion-title {
     font-size: 2.5rem;
+    color: #1a1a1a;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.occasion-description {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: #555;
+    max-width: 800px;
+    margin-bottom: 1.5rem;
+}
+
+.occasion-details {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #666;
+    margin-bottom: 2rem;
+    max-width: 800px;
+}
+
+.slider-dots {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #ccc;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dot.active {
+    background: #667eea;
+    width: 30px;
+    border-radius: 6px;
+}
+
+/* Occasions Grid Section */
+.occasions-page {
+    background: linear-gradient(135deg, #f5f7fa 0%, #e3f2fd 100%);
+    padding: 5rem 2rem;
+}
+
+.occasions-page h1,
+.page-title {
+    text-align: center;
+    font-size: 3rem;
+    color: #1a1a1a;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.occasions-subtitle,
+.page-subtitle {
+    text-align: center;
+    font-size: 1.3rem;
+    color: #666;
     margin-bottom: 4rem;
+}
+
+.occasions-grid {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 3rem;
+}
+
+.occasion-item {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.occasion-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.occasion-image-card {
+    width: 100%;
+    height: 280px;
+    overflow: hidden;
+}
+
+.occasion-image-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.occasion-item:hover .occasion-image-card img {
+    transform: scale(1.1);
+}
+
+.occasion-info-card {
+    padding: 2rem;
+}
+
+.occasion-info-card h2 {
+    font-size: 1.8rem;
+    color: #1a1a1a;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.occasion-info-card p {
+    font-size: 1.1rem;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+/* Icon-based Occasion Cards */
+.occasion-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.occasion-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.occasion-icon {
+    font-size: 5rem;
+    margin-bottom: 1.5rem;
+}
+
+.occasion-card h3 {
+    font-size: 1.8rem;
+    margin-bottom: 0.8rem;
+    color: #1a1a1a;
+    font-weight: 600;
+}
+
+.occasion-card p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* CTA Button */
+.cta-button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 1rem 2.5rem;
+    font-size: 1.15rem;
+    font-weight: 600;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    display: inline-block;
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
+}
+
+.cta-button:active {
+    transform: translateY(-1px);
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 20px;
+    padding: 3rem;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #666;
+    transition: color 0.3s;
+}
+
+.modal-close:hover {
+    color: #1a1a1a;
+}
+
+.modal-content h2 {
+    font-size: 2rem;
+    color: #1a1a1a;
+    margin-bottom: 1rem;
+}
+
+.modal-content p {
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+.modal-content input,
+.modal-content textarea {
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: border-color 0.3s;
+}
+
+.modal-content input:focus,
+.modal-content textarea:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.modal-content textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.modal-submit {
+    width: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.modal-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+/* Page Section */
+.page-section {
+    padding: 8rem 2rem 5rem;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.page-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Occasions Section Additional Styles */
+.occasions {
+    padding: 5rem 2rem;
+    background: linear-gradient(180deg, #e8dff5 0%, #f8f9fa 100%);
+    text-align: center;
+}
+
+.occasions h2 {
+    font-size: 3rem;
+    margin-bottom: 3rem;
     color: #1a1a1a;
     font-weight: 700;
     font-family: 'Amaranth', sans-serif;
 }
 
 .occasions-slider {
+    position: relative;
     max-width: 1400px;
     margin: 0 auto;
-    position: relative;
     display: flex;
     align-items: center;
-    gap: 2rem;
+    justify-content: center;
 }
 
 .slider-container {
-    flex: 1;
+    width: 100%;
     overflow: hidden;
-    padding: 4rem 0;
+    position: relative;
 }
 
 .slider-track {
     display: flex;
     transition: transform 0.5s ease;
-    gap: 2rem;
-    align-items: center;
 }
 
 .occasion-card {
-    min-width: 380px;
-    flex-shrink: 0;
+    min-width: 320px;
     background: white;
     border-radius: 20px;
-    padding: 1.5rem;
-    text-align: center;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    transition: all 0.4s ease;
-    transform: scale(0.75);
-    opacity: 0.5;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    margin: 0 16px;
+    opacity: 0.6;
+    transform: scale(0.9);
+    transition: all 0.5s ease;
 }
 
 .occasion-card.active {
-    transform: scale(1.15);
     opacity: 1;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
-    z-index: 2;
+    transform: scale(1.05);
+    box-shadow: 0 20px 50px rgba(124, 58, 237, 0.3);
 }
 
 .card-image {
     width: 100%;
     height: 280px;
-    border-radius: 12px;
     overflow: hidden;
-    margin-bottom: 1.5rem;
-    border: 4px solid #1a1a1a;
 }
 
 .card-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.occasion-card:hover .card-image img {
+    transform: scale(1.1);
 }
 
 .occasion-card h3 {
-    font-size: 1.4rem;
-    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    margin: 1.5rem 0;
     color: #1a1a1a;
     font-weight: 600;
 }
 
 .learn-more-btn {
-    background: #c4b5fd;
+    background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
     color: white;
     border: none;
-    padding: 0.75rem 2rem;
-    border-radius: 25px;
+    padding: 0.8rem 2rem;
     font-size: 1rem;
     font-weight: 600;
+    border-radius: 10px;
     cursor: pointer;
+    margin-bottom: 1.5rem;
     transition: all 0.3s;
 }
 
 .learn-more-btn:hover {
-    background: #a78bfa;
     transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(167, 139, 250, 0.4);
+    box-shadow: 0 8px 20px rgba(124, 58, 237, 0.4);
 }
 
 .slider-btn {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    background: rgba(173, 216, 230, 0.9);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
     border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
     cursor: pointer;
+    z-index: 10;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     transition: all 0.3s;
-    z-index: 10;
-    flex-shrink: 0;
 }
 
 .slider-btn:hover {
-    background: rgba(135, 206, 250, 1);
-    transform: scale(1.1);
+    background: #7c3aed;
+    color: white;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.prev-btn {
+    left: 1rem;
+}
+
+.next-btn {
+    right: 1rem;
 }
 
 .slider-btn i {
-    font-size: 1.8rem;
-    color: white;
+    font-size: 1.2rem;
 }
 
 .slider-dots {
     display: flex;
     justify-content: center;
-    gap: 1rem;
-    margin-top: 3rem;
+    gap: 0.8rem;
+    margin-top: 2rem;
 }
 
 .dot {
-    width: 18px;
-    height: 18px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
-    background: #c4b5fd;
+    background: #d1d5db;
     cursor: pointer;
     transition: all 0.3s;
 }
 
 .dot.active {
-    background: #8b5cf6;
-    transform: scale(1.2);
+    background: #7c3aed;
+    transform: scale(1.3);
+}
+
+.dot:hover {
+    background: #9f7aea;
 }
 
 /* Responsive */
-@media (max-width: 968px) {
-    .occasion-card {
-        min-width: 300px;
+@media (max-width: 1024px) {
+    .slider-nav.prev {
+        left: -40px;
     }
 
-    .slider-btn {
+    .slider-nav.next {
+        right: -40px;
+    }
+
+    .slider-nav {
         width: 50px;
         height: 50px;
     }
 
-    .slider-btn i {
+    .slider-nav i {
         font-size: 1.2rem;
+    }
+
+    .occasions-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
     }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
+    .occasions-hero {
+        padding: 6rem 1rem 3rem;
+    }
+
+    .occasion-slider {
+        padding: 2rem 1.5rem;
+        min-height: 600px;
+        margin-top: 1rem;
+    }
+
+    .occasion-image {
+        height: 350px;
+    }
+
+    .slider-nav {
+        width: 45px;
+        height: 45px;
+    }
+
+    .slider-nav.prev {
+        left: 10px;
+        top: 200px;
+    }
+
+    .slider-nav.next {
+        right: 10px;
+        top: 200px;
+    }
+
+    .slider-nav i {
+        font-size: 1.1rem;
+    }
+
+    .occasion-title {
+        font-size: 1.8rem;
+    }
+
+    .occasion-description {
+        font-size: 1rem;
+    }
+
+    .occasions-page h1,
+    .page-title {
+        font-size: 2.2rem;
+    }
+
+    .occasions-subtitle,
+    .page-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .occasions-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .page-section {
+        padding: 6rem 2rem 3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .occasion-slider {
+        padding: 1.5rem 1rem;
+        min-height: 550px;
+    }
+
+    .occasion-image {
+        height: 280px;
+    }
+
+    .occasion-title {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .occasion-description {
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+
+    .slider-nav {
+        width: 40px;
+        height: 40px;
+    }
+
+    .slider-nav.prev {
+        top: 180px;
+    }
+
+    .slider-nav.next {
+        top: 180px;
+    }
+
+    .occasions-page h1,
+    .page-title {
+        font-size: 1.8rem;
+    }
+
+    .modal-content {
+        padding: 2rem 1.5rem;
+    }
+}
+
+@media (max-width: 968px) {
     .occasions {
-        padding: 3rem 1rem;
+        padding: 4rem 1rem;
+    }
+
+    .occasions h2 {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
     }
 
     .occasion-card {
-        min-width: 250px;
+        min-width: 280px;
     }
 
     .card-image {
-        height: 200px;
+        height: 220px;
     }
 
     .slider-btn {
@@ -176,7 +711,50 @@
         height: 40px;
     }
 
+    .prev-btn {
+        left: 0.5rem;
+    }
+
+    .next-btn {
+        right: 0.5rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .occasions h2 {
+        font-size: 2rem;
+    }
+
+    .occasion-card {
+        min-width: 250px;
+        margin: 0 8px;
+    }
+
+    .card-image {
+        height: 180px;
+    }
+
+    .occasion-card h3 {
+        font-size: 1.4rem;
+        margin: 1rem 0;
+    }
+
+    .learn-more-btn {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    .slider-btn {
+        width: 35px;
+        height: 35px;
+    }
+
     .slider-btn i {
         font-size: 1rem;
+    }
+
+    .dot {
+        width: 10px;
+        height: 10px;
     }
 }

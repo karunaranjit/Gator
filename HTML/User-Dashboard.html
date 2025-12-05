@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard - PhoGator</title>
+    <link rel="icon" type="image/png" href="../assets/images/logo.png">
+    <link rel="stylesheet" href="../CSS/User-Dashboard.css">
+    <link rel="stylesheet" href="../CSS/Footer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <!-- Custom Header for Dashboard -->
+    <header class="dashboard-header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="./Home.html" class="logo">
+                    <img src="../assets/images/logo.png" alt="PhoGator Logo">
+                    <span>PhoGator</span>
+                </a>
+                
+                <button class="home-btn" onclick="window.location.href='./Home.html'">
+                    <i class="fa-solid fa-home"></i>
+                    Home
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- User Dashboard -->
+    <section class="user-dashboard">
+        <div class="dashboard-container">
+            <!-- User Profile Header -->
+            <div class="profile-header">
+                <!-- Profile Info and Stats -->
+                <div class="profile-header-main">
+                    <div class="profile-info">
+                        <div class="profile-avatar">
+                            <img src="../assets/images/logo.png" alt="Aayush Sharma">
+                        </div>
+                        <div class="profile-details">
+                            <h1>Aayush Sharma</h1>
+                            <p class="profile-email">aayush@example.com</p>
+                            <p class="member-since">Member since Nov 2025</p>
+                        </div>
+                    </div>
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <h3>234</h3>
+                            <p>Photos</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>8</h3>
+                            <p>Events</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>45</h3>
+                            <p>Favorites</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Actions -->
+                <div class="profile-bottom-actions">
+                    <button class="btn-book-event" onclick="window.location.href='./Occasions.html'">
+                        <i class="fa-solid fa-plus"></i>
+                        Book Event
+                    </button>
+                    <button class="btn-settings">
+                        <i class="fa-solid fa-gear"></i>
+                        Settings
+                    </button>
+                </div>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <div class="dashboard-tabs">
+                <button class="tab-btn active" onclick="showTab('photos')">
+                    <i class="fa-solid fa-image"></i>
+                    My Photos
+                </button>
+                <button class="tab-btn" onclick="showTab('events')">
+                    <i class="fa-solid fa-calendar"></i>
+                    Events
+                </button>
+                <button class="tab-btn" onclick="showTab('favorites')">
+                    <i class="fa-solid fa-heart"></i>
+                    Favorites
+                </button>
+                <button class="tab-btn" onclick="showTab('downloads')">
+                    <i class="fa-solid fa-download"></i>
+                    Downloads
+                </button>
+            </div>
+
+            <!-- Search and Filter -->
+            <div class="search-filter-bar">
+                <div class="search-box">
+                    <i class="fa-solid fa-search"></i>
+                    <input type="text" placeholder="Search photos by event name...">
+                </div>
+                <div class="filter-actions">
+                    <button class="filter-btn">
+                        <i class="fa-solid fa-filter"></i>
+                        Filter
+                    </button>
+                    <button class="view-btn">
+                        <i class="fa-solid fa-th"></i>
+                        View
+                    </button>
+                </div>
+            </div>
+
+            <!-- My Photos Tab -->
+            <div class="tab-content" id="photosTab">
+                <div class="photos-grid">
+                    <div class="photo-card" data-title="Tech Summit 2025">
+                        <div class="photo-image">
+                            <img src="../assets/images/college.jpg" alt="Tech Summit 2025">
+                            <button class="favorite-btn active" onclick="toggleFavorite(this, event)">
+                                <i class="fa-solid fa-heart"></i>
+                            </button>
+                            <div class="photo-overlay">
+                                <button class="photo-action-btn view-btn-action" onclick="viewPhoto(this, event)">
+                                    <i class="fa-solid fa-eye"></i>
+                                    View
+                                </button>
+                                <button class="photo-action-btn save-btn-action" onclick="downloadPhoto(this, event)">
+                                    <i class="fa-solid fa-download"></i>
+                                    Save
+                                </button>
+                            </div>
+                            <div class="event-title-overlay">
+                                <h4>Tech Summit 2025</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="photo-card" data-title="Birthday Party">
+                        <div class="photo-image">
+                            <img src="../assets/images/birthday.jpg" alt="Birthday Party">
+                            <button class="favorite-btn" onclick="toggleFavorite(this, event)">
+                                <i class="fa-solid fa-heart"></i>
+                            </button>
+                            <div class="photo-overlay">
+                                <button class="photo-action-btn view-btn-action" onclick="viewPhoto(this, event)">
+                                    <i class="fa-solid fa-eye"></i>
+                                    View
+                                </button>
+                                <button class="photo-action-btn save-btn-action" onclick="downloadPhoto(this, event)">
+                                    <i class="fa-solid fa-download"></i>
+                                    Save
+                                </button>
+                            </div>
+                            <div class="event-title-overlay">
+                                <h4>Birthday Party</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="photo-card" data-title="Festival Celebration">
+                        <div class="photo-image">
+                            <img src="../assets/images/festival.jpg" alt="Festival">
+                            <button class="favorite-btn active" onclick="toggleFavorite(this, event)">
+                                <i class="fa-solid fa-heart"></i>
+                            </button>
+                            <div class="photo-overlay">
+                                <button class="photo-action-btn view-btn-action" onclick="viewPhoto(this, event)">
+                                    <i class="fa-solid fa-eye"></i>
+                                    View
+                                </button>
+                                <button class="photo-action-btn save-btn-action" onclick="downloadPhoto(this, event)">
+                                    <i class="fa-solid fa-download"></i>
+                                    Save
+                                </button>
+                            </div>
+                            <div class="event-title-overlay">
+                                <h4>Festival Celebration</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="photo-card" data-title="Wedding Ceremony">
+                        <div class="photo-image">
+                            <img src="../assets/images/wedding.jpg" alt="Wedding">
+                            <button class="favorite-btn" onclick="toggleFavorite(this, event)">
+                                <i class="fa-solid fa-heart"></i>
+                            </button>
+                            <div class="photo-overlay">
+                                <button class="photo-action-btn view-btn-action" onclick="viewPhoto(this, event)">
+                                    <i class="fa-solid fa-eye"></i>
+                                    View
+                                </button>
+                                <button class="photo-action-btn save-btn-action" onclick="downloadPhoto(this, event)">
+                                    <i class="fa-solid fa-download"></i>
+                                    Save
+                                </button>
+                            </div>
+                            <div class="event-title-overlay">
+                                <h4>Wedding Ceremony</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="photo-card" data-title="College Fest">
+                        <div class="photo-image">
+                            <img src="../assets/images/college.jpg" alt="College">
+                            <button class="favorite-btn" onclick="toggleFavorite(this, event)">
+                                <i class="fa-solid fa-heart"></i>
+                            </button>
+                            <div class="photo-overlay">
+                                <button class="photo-action-btn view-btn-action" onclick="viewPhoto(this, event)">
+                                    <i class="fa-solid fa-eye"></i>
+                                    View
+                                </button>
+                                <button class="photo-action-btn save-btn-action" onclick="downloadPhoto(this, event)">
+                                    <i class="fa-solid fa-download"></i>
+                                    Save
+                                </button>
+                            </div>
+                            <div class="event-title-overlay">
+                                <h4>College Fest</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="photo-card" data-title="Birthday Bash">
+                        <div class="photo-image">
+                            <img src="../assets/images/birthday.jpg" alt="Birthday">
+                            <button class="favorite-btn" onclick="toggleFavorite(this, event)">
+                                <i class="fa-solid fa-heart"></i>
+                            </button>
+                            <div class="photo-overlay">
+                                <button class="photo-action-btn view-btn-action" onclick="viewPhoto(this, event)">
+                                    <i class="fa-solid fa-eye"></i>
+                                    View
+                                </button>
+                                <button class="photo-action-btn save-btn-action" onclick="downloadPhoto(this, event)">
+                                    <i class="fa-solid fa-download"></i>
+                                    Save
+                                </button>
+                            </div>
+                            <div class="event-title-overlay">
+                                <h4>Birthday Bash</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Events Tab -->
+            <div class="tab-content" id="eventsTab" style="display: none;">
+                <div class="events-list">
+                    <div class="event-card">
+                        <div class="event-image">
+                            <img src="../assets/images/birthday.jpg" alt="Priya & Rahul Wedding">
+                            <span class="event-badge active">active</span>
+                        </div>
+                        <div class="event-info">
+                            <h3>Priya & Rahul Wedding</h3>
+                            <div class="event-meta">
+                                <p><i class="fa-solid fa-calendar"></i> Nov 15, 2025</p>
+                                <p><i class="fa-solid fa-location-dot"></i> Kathmandu, Nepal</p>
+                                <p><i class="fa-solid fa-hashtag"></i> WED2024_PR</p>
+                            </div>
+                            <div class="event-stats">
+                                <div class="stat">
+                                    <i class="fa-solid fa-image"></i>
+                                    <span>89 Photos</span>
+                                </div>
+                                <div class="stat">
+                                    <i class="fa-solid fa-download"></i>
+                                    <span>34 Downloaded</span>
+                                </div>
+                                <div class="stat">
+                                    <i class="fa-solid fa-heart"></i>
+                                    <span>12 Favorites</span>
+                                </div>
+                            </div>
+                            <button class="view-gallery-btn" onclick="window.location.href='#'">
+                                <i class="fa-solid fa-eye"></i>
+                                View Gallery
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="event-card">
+                        <div class="event-image">
+                            <img src="../assets/images/college.jpg" alt="Tech Summit 2025">
+                            <span class="event-badge active">active</span>
+                        </div>
+                        <div class="event-info">
+                            <h3>Tech Summit 2025</h3>
+                            <div class="event-meta">
+                                <p><i class="fa-solid fa-calendar"></i> Nov 12, 2025</p>
+                                <p><i class="fa-solid fa-location-dot"></i> Pokhara, Nepal</p>
+                                <p><i class="fa-solid fa-hashtag"></i> TECH2025</p>
+                            </div>
+                            <div class="event-stats">
+                                <div class="stat">
+                                    <i class="fa-solid fa-image"></i>
+                                    <span>56 Photos</span>
+                                </div>
+                                <div class="stat">
+                                    <i class="fa-solid fa-download"></i>
+                                    <span>23 Downloaded</span>
+                                </div>
+                                <div class="stat">
+                                    <i class="fa-solid fa-heart"></i>
+                                    <span>8 Favorites</span>
+                                </div>
+                            </div>
+                            <button class="view-gallery-btn" onclick="window.location.href='#'">
+                                <i class="fa-solid fa-eye"></i>
+                                View Gallery
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Favorites Tab -->
+            <div class="tab-content" id="favoritesTab" style="display: none;">
+                <div class="photos-grid">
+                    <!-- Photos with active favorites will appear here -->
+                </div>
+            </div>
+
+            <!-- Downloads Tab -->
+            <div class="tab-content" id="downloadsTab" style="display: none;">
+                <!-- ...existing download history code... -->
+            </div>
+
+            <!-- Load More Button -->
+            <div class="load-more">
+                <button class="load-more-btn">Load More</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Photo Modal -->
+    <div class="photo-modal" id="photoModal">
+        <div class="modal-content-photo">
+            <button class="modal-close-btn" onclick="closePhotoModal()">
+                <i class="fa-solid fa-times"></i>
+            </button>
+            <img id="modalImage" src="" alt="Full Size Photo">
+            <div class="modal-actions">
+                <button class="modal-action-btn modal-download-btn" onclick="downloadModalPhoto()">
+                    <i class="fa-solid fa-download"></i>
+                    Download Photo
+                </button>
+                <button class="modal-action-btn" onclick="closePhotoModal()">
+                    <i class="fa-solid fa-times"></i>
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include Footer -->
+    <div id="footer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load Footer
+            fetch('./Footer.html')
+                .then(response => response.text())
+                .then(data => document.getElementById('footer').innerHTML = data);
+        });
+
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => content.style.display = 'none');
+            
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected tab and mark button as active
+            event.target.closest('.tab-btn').classList.add('active');
+            document.getElementById(tabName + 'Tab').style.display = 'block';
+        }
+
+        function toggleFavorite(button, e) {
+            e.stopPropagation();
+            button.classList.toggle('active');
+            
+            if (button.classList.contains('active')) {
+                // Add animation
+                button.style.transform = 'scale(1.3)';
+                setTimeout(() => {
+                    button.style.transform = 'scale(1)';
+                }, 200);
+            }
+        }
+
+        function viewPhoto(button, e) {
+            e.stopPropagation();
+            const photoCard = button.closest('.photo-card');
+            const img = photoCard.querySelector('.photo-image img');
+            const modal = document.getElementById('photoModal');
+            const modalImg = document.getElementById('modalImage');
+            
+            modalImg.src = img.src;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePhotoModal() {
+            const modal = document.getElementById('photoModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function downloadPhoto(button, e) {
+            e.stopPropagation();
+            const photoCard = button.closest('.photo-card');
+            const img = photoCard.querySelector('.photo-image img');
+            const title = photoCard.getAttribute('data-title') || 'photo';
+            
+            // Create download link
+            const link = document.createElement('a');
+            link.href = img.src;
+            link.download = `${title.replace(/\s+/g, '_')}.jpg`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Show success message
+            alert('Photo downloaded successfully! 🎉');
+        }
+
+        function downloadModalPhoto() {
+            const modalImg = document.getElementById('modalImage');
+            const link = document.createElement('a');
+            link.href = modalImg.src;
+            link.download = 'phogator_photo.jpg';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            alert('Photo downloaded successfully! 🎉');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('photoModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePhotoModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closePhotoModal();
+            }
+        });
+    </script>
+</body>
+</html>
