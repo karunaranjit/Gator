@@ -6,7 +6,13 @@
                 <img src="../assets/images/logo.png" alt="PhoGator Logo" class="logo-img">
             </a>
         </div>
-        <div class="nav-links">
+        
+        <!-- Hamburger Menu -->
+        <button class="mobile-menu-toggle" id="mobileMenuToggle">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="nav-links" id="navLinks">
             <div class="occassion-wrapper">
                 <a href="./Occasions.html" class="occassion-link">Occasions</a>
                 <div class="occassion-dropdown">
@@ -32,8 +38,9 @@
                 </div>
             </div>
             <a href="Pricing.html">Pricing</a>
+            <a href="./Mobile-Access.html" class="nav-link">Mobile</a>
             <a href="./User-Dashboard.html" class="nav-link">User</a>
-        <a href="./Photographer-Dashboard.html" class="nav-link">Photographer</a>
+            <a href="./Photographer-Dashboard.html" class="nav-link">Photographer</a>
         </div>
         <div class="nav-auth">
             <a href="User-Login.html" class="auth-link">
@@ -45,3 +52,22 @@
         </div>
     </div>
 </nav>
+
+<script>
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const navLinks = document.getElementById('navLinks');
+    
+    if (mobileMenuToggle) {
+        mobileMenuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const icon = mobileMenuToggle.querySelector('i');
+            if (navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+    }
+</script>

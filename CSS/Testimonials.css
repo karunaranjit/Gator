@@ -152,6 +152,12 @@
     margin: 0;
 }
 
+/* ==========================================
+   BACKGROUND CARDS - CURRENTLY DISABLED
+   Uncomment when needed
+   ========================================== */
+
+/*
 .background-cards {
     position: absolute;
     top: 0;
@@ -195,6 +201,7 @@
     width: 85%;
     height: 85%;
 }
+*/
 
 .testimonial-nav-btn {
     position: absolute;
@@ -435,7 +442,9 @@
         font-size: 1rem;
     }
 
+    /* Uncomment when background cards are enabled
     .bg-card {
         display: none;
     }
+    */
 }

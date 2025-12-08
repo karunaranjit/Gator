@@ -46,16 +46,18 @@
                     </div>
                     <div class="profile-stats">
                         <div class="stat-item">
-                            <h3>234</h3>
-                            <p>Photos</p>
+                            <h3>47</h3>
+                            <p>Photos Found</p>
                         </div>
                         <div class="stat-item">
-                            <h3>8</h3>
-                            <p>Events</p>
+                            <h3>3</h3>
+                            <p>Events Attended</p>
                         </div>
                         <div class="stat-item">
-                            <h3>45</h3>
-                            <p>Favorites</p>
+                            <h3 id="userPhotoCode" style="color: #667eea; cursor: pointer;" onclick="copyPhotoCode()" title="Click to copy">
+                                A7K9M2
+                            </h3>
+                            <p>Your Photo Code</p>
                         </div>
                     </div>
                 </div>
@@ -66,7 +68,7 @@
                         <i class="fa-solid fa-plus"></i>
                         Book Event
                     </button>
-                    <button class="btn-settings">
+                    <button class="btn-settings" onclick="openSettingsModal()">
                         <i class="fa-solid fa-gear"></i>
                         Settings
                     </button>
@@ -113,227 +115,46 @@
 
             <!-- My Photos Tab -->
             <div class="tab-content" id="photosTab">
-                <div class="photos-grid">
-                    <div class="photo-card" data-title="Tech Summit 2025">
-                        <div class="photo-image">
-                            <img src="../assets/images/college.jpg" alt="Tech Summit 2025">
-                            <button class="favorite-btn active" onclick="toggleFavorite(this, event)">
-                                <i class="fa-solid fa-heart"></i>
-                            </button>
-                            <div class="photo-overlay">
-                                <button class="photo-action-btn view-btn-action" onclick="viewPhoto(this, event)">
-                                    <i class="fa-solid fa-eye"></i>
-                                    View
-                                </button>
-                                <button class="photo-action-btn save-btn-action" onclick="downloadPhoto(this, event)">
-                                    <i class="fa-solid fa-download"></i>
-                                    Save
-                                </button>
-                            </div>
-                            <div class="event-title-overlay">
-                                <h4>Tech Summit 2025</h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="photo-card" data-title="Birthday Party">
-                        <div class="photo-image">
-                            <img src="../assets/images/birthday.jpg" alt="Birthday Party">
-                            <button class="favorite-btn" onclick="toggleFavorite(this, event)">
-                                <i class="fa-solid fa-heart"></i>
-                            </button>
-                            <div class="photo-overlay">
-                                <button class="photo-action-btn view-btn-action" onclick="viewPhoto(this, event)">
-                                    <i class="fa-solid fa-eye"></i>
-                                    View
-                                </button>
-                                <button class="photo-action-btn save-btn-action" onclick="downloadPhoto(this, event)">
-                                    <i class="fa-solid fa-download"></i>
-                                    Save
-                                </button>
-                            </div>
-                            <div class="event-title-overlay">
-                                <h4>Birthday Party</h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="photo-card" data-title="Festival Celebration">
-                        <div class="photo-image">
-                            <img src="../assets/images/festival.jpg" alt="Festival">
-                            <button class="favorite-btn active" onclick="toggleFavorite(this, event)">
-                                <i class="fa-solid fa-heart"></i>
-                            </button>
-                            <div class="photo-overlay">
-                                <button class="photo-action-btn view-btn-action" onclick="viewPhoto(this, event)">
-                                    <i class="fa-solid fa-eye"></i>
-                                    View
-                                </button>
-                                <button class="photo-action-btn save-btn-action" onclick="downloadPhoto(this, event)">
-                                    <i class="fa-solid fa-download"></i>
-                                    Save
-                                </button>
-                            </div>
-                            <div class="event-title-overlay">
-                                <h4>Festival Celebration</h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="photo-card" data-title="Wedding Ceremony">
-                        <div class="photo-image">
-                            <img src="../assets/images/wedding.jpg" alt="Wedding">
-                            <button class="favorite-btn" onclick="toggleFavorite(this, event)">
-                                <i class="fa-solid fa-heart"></i>
-                            </button>
-                            <div class="photo-overlay">
-                                <button class="photo-action-btn view-btn-action" onclick="viewPhoto(this, event)">
-                                    <i class="fa-solid fa-eye"></i>
-                                    View
-                                </button>
-                                <button class="photo-action-btn save-btn-action" onclick="downloadPhoto(this, event)">
-                                    <i class="fa-solid fa-download"></i>
-                                    Save
-                                </button>
-                            </div>
-                            <div class="event-title-overlay">
-                                <h4>Wedding Ceremony</h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="photo-card" data-title="College Fest">
-                        <div class="photo-image">
-                            <img src="../assets/images/college.jpg" alt="College">
-                            <button class="favorite-btn" onclick="toggleFavorite(this, event)">
-                                <i class="fa-solid fa-heart"></i>
-                            </button>
-                            <div class="photo-overlay">
-                                <button class="photo-action-btn view-btn-action" onclick="viewPhoto(this, event)">
-                                    <i class="fa-solid fa-eye"></i>
-                                    View
-                                </button>
-                                <button class="photo-action-btn save-btn-action" onclick="downloadPhoto(this, event)">
-                                    <i class="fa-solid fa-download"></i>
-                                    Save
-                                </button>
-                            </div>
-                            <div class="event-title-overlay">
-                                <h4>College Fest</h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="photo-card" data-title="Birthday Bash">
-                        <div class="photo-image">
-                            <img src="../assets/images/birthday.jpg" alt="Birthday">
-                            <button class="favorite-btn" onclick="toggleFavorite(this, event)">
-                                <i class="fa-solid fa-heart"></i>
-                            </button>
-                            <div class="photo-overlay">
-                                <button class="photo-action-btn view-btn-action" onclick="viewPhoto(this, event)">
-                                    <i class="fa-solid fa-eye"></i>
-                                    View
-                                </button>
-                                <button class="photo-action-btn save-btn-action" onclick="downloadPhoto(this, event)">
-                                    <i class="fa-solid fa-download"></i>
-                                    Save
-                                </button>
-                            </div>
-                            <div class="event-title-overlay">
-                                <h4>Birthday Bash</h4>
-                            </div>
-                        </div>
-                    </div>
+                <div class="empty-state">
+                    <i class="fa-solid fa-image"></i>
+                    <h3>No Photos Yet</h3>
+                    <p>Your photos from events will appear here</p>
+                    <button class="btn-book-event" onclick="window.location.href='./Occasions.html'">
+                        <!-- <i class="fa-solid fa-plus"></i> -->
+                        <span>Book Your First Event</span>
+                    </button>
                 </div>
             </div>
 
             <!-- Events Tab -->
             <div class="tab-content" id="eventsTab" style="display: none;">
-                <div class="events-list">
-                    <div class="event-card">
-                        <div class="event-image">
-                            <img src="../assets/images/birthday.jpg" alt="Priya & Rahul Wedding">
-                            <span class="event-badge active">active</span>
-                        </div>
-                        <div class="event-info">
-                            <h3>Priya & Rahul Wedding</h3>
-                            <div class="event-meta">
-                                <p><i class="fa-solid fa-calendar"></i> Nov 15, 2025</p>
-                                <p><i class="fa-solid fa-location-dot"></i> Kathmandu, Nepal</p>
-                                <p><i class="fa-solid fa-hashtag"></i> WED2024_PR</p>
-                            </div>
-                            <div class="event-stats">
-                                <div class="stat">
-                                    <i class="fa-solid fa-image"></i>
-                                    <span>89 Photos</span>
-                                </div>
-                                <div class="stat">
-                                    <i class="fa-solid fa-download"></i>
-                                    <span>34 Downloaded</span>
-                                </div>
-                                <div class="stat">
-                                    <i class="fa-solid fa-heart"></i>
-                                    <span>12 Favorites</span>
-                                </div>
-                            </div>
-                            <button class="view-gallery-btn" onclick="window.location.href='#'">
-                                <i class="fa-solid fa-eye"></i>
-                                View Gallery
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="event-card">
-                        <div class="event-image">
-                            <img src="../assets/images/college.jpg" alt="Tech Summit 2025">
-                            <span class="event-badge active">active</span>
-                        </div>
-                        <div class="event-info">
-                            <h3>Tech Summit 2025</h3>
-                            <div class="event-meta">
-                                <p><i class="fa-solid fa-calendar"></i> Nov 12, 2025</p>
-                                <p><i class="fa-solid fa-location-dot"></i> Pokhara, Nepal</p>
-                                <p><i class="fa-solid fa-hashtag"></i> TECH2025</p>
-                            </div>
-                            <div class="event-stats">
-                                <div class="stat">
-                                    <i class="fa-solid fa-image"></i>
-                                    <span>56 Photos</span>
-                                </div>
-                                <div class="stat">
-                                    <i class="fa-solid fa-download"></i>
-                                    <span>23 Downloaded</span>
-                                </div>
-                                <div class="stat">
-                                    <i class="fa-solid fa-heart"></i>
-                                    <span>8 Favorites</span>
-                                </div>
-                            </div>
-                            <button class="view-gallery-btn" onclick="window.location.href='#'">
-                                <i class="fa-solid fa-eye"></i>
-                                View Gallery
-                            </button>
-                        </div>
-                    </div>
+                <div class="empty-state">
+                    <i class="fa-solid fa-calendar"></i>
+                    <h3>No Events Yet</h3>
+                    <p>Book an event to start capturing memories</p>
+                    <button class="btn-book-event" onclick="window.location.href='./Occasions.html'">
+                        <!-- <i class="fa-solid fa-plus"></i> -->
+                        <span>Book Your First Event</span>
+                    </button>
                 </div>
             </div>
 
             <!-- Favorites Tab -->
             <div class="tab-content" id="favoritesTab" style="display: none;">
-                <div class="photos-grid">
-                    <!-- Photos with active favorites will appear here -->
+                <div class="empty-state">
+                    <i class="fa-solid fa-heart"></i>
+                    <h3>No Favorites Yet</h3>
+                    <p>Photos you favorite will appear here</p>
                 </div>
             </div>
 
             <!-- Downloads Tab -->
             <div class="tab-content" id="downloadsTab" style="display: none;">
-                <!-- ...existing download history code... -->
-            </div>
-
-            <!-- Load More Button -->
-            <div class="load-more">
-                <button class="load-more-btn">Load More</button>
+                <div class="empty-state">
+                    <i class="fa-solid fa-download"></i>
+                    <h3>No Downloads Yet</h3>
+                    <p>Your downloaded photos will appear here</p>
+                </div>
             </div>
         </div>
     </section>
@@ -358,6 +179,170 @@
         </div>
     </div>
 
+    <!-- Settings Modal -->
+    <div class="settings-modal" id="settingsModal">
+        <div class="settings-modal-content">
+            <div class="settings-modal-header">
+                <h2>Settings</h2>
+                <button class="settings-close-btn" onclick="closeSettingsModal()">
+                    <i class="fa-solid fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="settings-options">
+                <div class="settings-option" onclick="openEditProfileModal()">
+                    <div class="settings-option-left">
+                        <div class="settings-option-icon">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <div class="settings-option-text">
+                            <h4>Edit Profile</h4>
+                            <p>Update your personal information</p>
+                        </div>
+                    </div>
+                    <div class="settings-option-arrow">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+
+                <div class="settings-option" onclick="alert('Change Password feature coming soon!')">
+                    <div class="settings-option-left">
+                        <div class="settings-option-icon">
+                            <i class="fa-solid fa-lock"></i>
+                        </div>
+                        <div class="settings-option-text">
+                            <h4>Change Password</h4>
+                            <p>Update your password</p>
+                        </div>
+                    </div>
+                    <div class="settings-option-arrow">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+
+                <div class="settings-option" onclick="alert('Notification Settings feature coming soon!')">
+                    <div class="settings-option-left">
+                        <div class="settings-option-icon">
+                            <i class="fa-solid fa-bell"></i>
+                        </div>
+                        <div class="settings-option-text">
+                            <h4>Notifications</h4>
+                            <p>Manage notification preferences</p>
+                        </div>
+                    </div>
+                    <div class="settings-option-arrow">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+
+                <div class="settings-option" onclick="alert('Privacy Settings feature coming soon!')">
+                    <div class="settings-option-left">
+                        <div class="settings-option-icon">
+                            <i class="fa-solid fa-shield"></i>
+                        </div>
+                        <div class="settings-option-text">
+                            <h4>Privacy & Security</h4>
+                            <p>Manage your privacy settings</p>
+                        </div>
+                    </div>
+                    <div class="settings-option-arrow">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+
+                <div class="settings-option" onclick="alert('Help & Support feature coming soon!')">
+                    <div class="settings-option-left">
+                        <div class="settings-option-icon">
+                            <i class="fa-solid fa-question-circle"></i>
+                        </div>
+                        <div class="settings-option-text">
+                            <h4>Help & Support</h4>
+                            <p>Get help or contact support</p>
+                        </div>
+                    </div>
+                    <div class="settings-option-arrow">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+
+            <button class="settings-logout-btn" onclick="logout()">
+                <i class="fa-solid fa-sign-out-alt"></i>
+                Logout
+            </button>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div class="settings-modal" id="editProfileModal">
+        <div class="settings-modal-content">
+            <div class="settings-modal-header">
+                <h2>Edit Profile</h2>
+                <button class="settings-close-btn" onclick="closeEditProfileModal()">
+                    <i class="fa-solid fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="edit-profile-options">
+                <div class="edit-profile-section">
+                    <label for="editName">Full Name</label>
+                    <div class="input-group">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" id="editName" value="Aayush Sharma" placeholder="Enter your name">
+                    </div>
+                </div>
+
+                <div class="edit-profile-section">
+                    <label for="editEmail">Email Address</label>
+                    <div class="input-group">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" id="editEmail" value="aayush@example.com" placeholder="Enter your email">
+                    </div>
+                </div>
+
+                <div class="edit-profile-section">
+                    <label>Profile Picture</label>
+                    <div class="profile-picture-upload">
+                        <div class="current-profile-pic">
+                            <img src="../assets/images/logo.png" alt="Profile Picture" id="editProfilePic">
+                        </div>
+                        <div class="upload-actions">
+                            <label for="uploadNewPic" class="upload-btn">
+                                <i class="fa-solid fa-camera"></i>
+                                Change Picture
+                                <input type="file" id="uploadNewPic" accept="image/*" onchange="previewProfilePicture(event)" style="display: none;">
+                            </label>
+                            <button class="remove-pic-btn" onclick="removeProfilePicture()">
+                                <i class="fa-solid fa-trash"></i>
+                                Remove
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="edit-profile-section danger-zone">
+                    <label>Danger Zone</label>
+                    <button class="delete-account-btn" onclick="deleteAccount()">
+                        <i class="fa-solid fa-trash-alt"></i>
+                        Delete Account
+                    </button>
+                    <p class="warning-text">
+                        <i class="fa-solid fa-exclamation-triangle"></i>
+                        Once you delete your account, there is no going back. Please be certain.
+                    </p>
+                </div>
+            </div>
+
+            <div class="edit-profile-actions">
+                <button class="cancel-btn" onclick="closeEditProfileModal()">Cancel</button>
+                <button class="save-changes-btn" onclick="saveProfileChanges()">
+                    <i class="fa-solid fa-check"></i>
+                    Save Changes
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Include Footer -->
     <div id="footer"></div>
 
@@ -367,7 +352,35 @@
             fetch('./Footer.html')
                 .then(response => response.text())
                 .then(data => document.getElementById('footer').innerHTML = data);
+            
+            // Generate random photo code
+            generatePhotoCode();
         });
+
+        function generatePhotoCode() {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let code = '';
+            for (let i = 0; i < 6; i++) {
+                code += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            document.getElementById('userPhotoCode').textContent = code;
+        }
+
+        function copyPhotoCode() {
+            const code = document.getElementById('userPhotoCode').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                alert('Photo code copied: ' + code + '\n\nUse this code in the Mobile Access page to view your photos!');
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = code;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('Photo code copied: ' + code + '\n\nUse this code in the Mobile Access page to view your photos!');
+            });
+        }
 
         function showTab(tabName) {
             // Hide all tab contents
@@ -383,53 +396,10 @@
             document.getElementById(tabName + 'Tab').style.display = 'block';
         }
 
-        function toggleFavorite(button, e) {
-            e.stopPropagation();
-            button.classList.toggle('active');
-            
-            if (button.classList.contains('active')) {
-                // Add animation
-                button.style.transform = 'scale(1.3)';
-                setTimeout(() => {
-                    button.style.transform = 'scale(1)';
-                }, 200);
-            }
-        }
-
-        function viewPhoto(button, e) {
-            e.stopPropagation();
-            const photoCard = button.closest('.photo-card');
-            const img = photoCard.querySelector('.photo-image img');
-            const modal = document.getElementById('photoModal');
-            const modalImg = document.getElementById('modalImage');
-            
-            modalImg.src = img.src;
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
         function closePhotoModal() {
             const modal = document.getElementById('photoModal');
             modal.classList.remove('active');
             document.body.style.overflow = 'auto';
-        }
-
-        function downloadPhoto(button, e) {
-            e.stopPropagation();
-            const photoCard = button.closest('.photo-card');
-            const img = photoCard.querySelector('.photo-image img');
-            const title = photoCard.getAttribute('data-title') || 'photo';
-            
-            // Create download link
-            const link = document.createElement('a');
-            link.href = img.src;
-            link.download = `${title.replace(/\s+/g, '_')}.jpg`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            // Show success message
-            alert('Photo downloaded successfully! 🎉');
         }
 
         function downloadModalPhoto() {
@@ -443,6 +413,87 @@
             alert('Photo downloaded successfully! 🎉');
         }
 
+        function openSettingsModal() {
+            const modal = document.getElementById('settingsModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSettingsModal() {
+            const modal = document.getElementById('settingsModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function openEditProfileModal() {
+            closeSettingsModal();
+            const modal = document.getElementById('editProfileModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeEditProfileModal() {
+            const modal = document.getElementById('editProfileModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function previewProfilePicture(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('editProfilePic').src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function removeProfilePicture() {
+            if (confirm('Are you sure you want to remove your profile picture?')) {
+                document.getElementById('editProfilePic').src = '../assets/images/logo.png';
+                alert('Profile picture removed!');
+            }
+        }
+
+        function saveProfileChanges() {
+            const name = document.getElementById('editName').value;
+            const email = document.getElementById('editEmail').value;
+            
+            if (!name || !email) {
+                alert('Please fill in all required fields!');
+                return;
+            }
+
+            // Update profile header
+            document.querySelector('.profile-details h1').textContent = name;
+            document.querySelector('.profile-email').textContent = email;
+            
+            alert('Profile updated successfully! ✅');
+            closeEditProfileModal();
+        }
+
+        function deleteAccount() {
+            const confirmed = confirm('⚠️ WARNING: This action cannot be undone!\n\nAre you absolutely sure you want to delete your account?\n\nAll your data, photos, and events will be permanently deleted.');
+            
+            if (confirmed) {
+                const doubleConfirm = prompt('Type "DELETE" to confirm account deletion:');
+                if (doubleConfirm === 'DELETE') {
+                    alert('Account deleted successfully. Redirecting to home page...');
+                    window.location.href = './Home.html';
+                } else {
+                    alert('Account deletion cancelled.');
+                }
+            }
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                alert('Logging out...');
+                window.location.href = './Home.html';
+            }
+        }
+
         // Close modal when clicking outside
         document.getElementById('photoModal').addEventListener('click', function(e) {
             if (e.target === this) {
@@ -450,10 +501,21 @@
             }
         });
 
+        document.addEventListener('click', function(e) {
+            if (e.target.id === 'settingsModal') {
+                closeSettingsModal();
+            }
+            if (e.target.id === 'editProfileModal') {
+                closeEditProfileModal();
+            }
+        });
+
         // Close modal with Escape key
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 closePhotoModal();
+                closeSettingsModal();
+                closeEditProfileModal();
             }
         });
     </script>

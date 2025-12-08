@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Your Photos - PhoGator</title>
+    <link rel="icon" type="image/png" href="../assets/images/logo.png">
+    <link rel="stylesheet" href="../CSS/Mobile-Access.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <!-- Welcome Screen -->
+    <div class="welcome-screen" id="welcomeScreen">
+        <div class="welcome-container">
+            <div class="welcome-header">
+                <p class="welcome-subtitle">AI-Powered Photo Discovery</p>
+                <h1>Hold Tight!<br>PhoGator Is Tracking Your Smile.</h1>
+            </div>
+
+            <div class="camera-icon">
+                <i class="fa-solid fa-camera"></i>
+            </div>
+
+            <button class="get-started-btn" onclick="showUploadPage()">
+                Get Started For Free
+            </button>
+
+            <p class="powered-text">Fast. Secure. <strong>AI-Powered Photo Discovery</strong></p>
+        </div>
+    </div>
+
+    <!-- Upload/Code Screen (Initially Hidden) -->
+    <div class="upload-screen" id="uploadScreen" style="display: none;">
+        <!-- Main Content -->
+        <div class="access-container">
+            <div class="welcome-text">
+                <h2>Upload Your Selfie</h2>
+            </div>
+
+            <!-- Upload Selfie Section -->
+            <div class="upload-section">
+                <div class="upload-box" onclick="document.getElementById('fileInput').click()">
+                    <div class="upload-icon">
+                        <i class="fa-solid fa-image"></i>
+                    </div>
+                    <p class="upload-text">
+                        Drag & Drop or <span style="color: #B7A8F9; text-decoration: underline; cursor: pointer;">Click to Upload</span>
+                    </p>
+                    <p class="file-types">Supported files: JPG, PNG</p>
+                    <input type="file" id="fileInput" accept="image/jpeg,image/png" style="display: none;">
+                </div>
+                
+                <p class="privacy-note">
+                    <i class="fa-solid fa-shield-alt"></i> 
+                    Your selfie is used only for matching and is never shared.
+                </p>
+            </div>
+
+            <!-- Divider -->
+            <div class="divider">
+                <span>OR</span>
+            </div>
+
+            <!-- Photo Code Section -->
+            <div class="code-section">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                    <h3>Already Have a Photo Code?</h3>
+                </div>
+                
+                <div class="code-input-wrapper">
+                    <i class="fa-solid fa-key"></i>
+                    <input type="text" id="photoCode" placeholder="Enter Your Photo Code" maxlength="20">
+                </div>
+                
+                <button class="view-photos-btn" onclick="viewPhotos()">
+                    View my Photos
+                </button>
+                
+                <div class="help-text">
+                    <i class="fa-solid fa-info-circle"></i> 
+                    <strong>Tip:</strong> Your photo code was provided by your event photographer or sent to you via email after the event.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Photos Gallery Screen (Initially Hidden) -->
+    <div class="photos-gallery-screen" id="photosGalleryScreen" style="display: none;">
+        <!-- Gallery Header -->
+        <div class="gallery-header">
+            <button class="back-btn" onclick="goBackToUpload()">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <div class="gallery-user-info">
+                <div class="gallery-avatar" onclick="showProfileModal()">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <div class="gallery-share-btn">
+                    <i class="fa-solid fa-share-nodes"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gallery Title -->
+        <div class="gallery-title">
+            <h2>Photos of You</h2>
+        </div>
+
+        <!-- Photos Grid -->
+        <div class="mobile-photos-grid" id="mobilePhotosGrid">
+            <!-- Photos will be loaded here dynamically -->
+        </div>
+    </div>
+
+    <!-- Profile Modal (Initially Hidden) -->
+    <div class="profile-modal" id="profileModal">
+        <div class="profile-modal-content">
+            <div class="profile-modal-header">
+                <button class="profile-close-btn" onclick="closeProfileModal()">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+                <h3>Profile</h3>
+            </div>
+
+            <div class="profile-modal-body">
+                <div class="profile-avatar-large">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <h2 class="profile-username">User's Name</h2>
+                <p class="profile-member-since">Member since 2025 14 December</p>
+
+                <div class="profile-options">
+                    <button class="profile-option-btn">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                        <span>Edit Profile</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+
+                    <button class="profile-option-btn">
+                        <i class="fa-solid fa-gear"></i>
+                        <span>Setting</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+
+                    <button class="profile-option-btn">
+                        <i class="fa-solid fa-share-nodes"></i>
+                        <span>Share</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample photos data
+        const samplePhotos = [
+            '../assets/images/wedding.jpg',
+            '../assets/images/birthday.jpg',
+            '../assets/images/concert.jpg',
+            '../assets/images/sports.jpg',
+            '../assets/images/festival.jpg',
+            '../assets/images/college.jpg',
+            '../assets/images/brataman.jpg',
+            '../assets/images/family.jpeg'
+        ];
+
+        function showUploadPage() {
+            document.getElementById('welcomeScreen').style.display = 'none';
+            document.getElementById('uploadScreen').style.display = 'block';
+        }
+
+        function goBackToUpload() {
+            document.getElementById('photosGalleryScreen').style.display = 'none';
+            document.getElementById('uploadScreen').style.display = 'block';
+        }
+
+        function showProfileModal() {
+            document.getElementById('profileModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeProfileModal() {
+            document.getElementById('profileModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        const fileInput = document.getElementById('fileInput');
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                const file = e.target.files[0];
+                if (file.type.match('image/jpeg') || file.type.match('image/png')) {
+                    // Show photos gallery
+                    showPhotosGallery();
+                } else {
+                    alert('Please upload a JPG or PNG file.');
+                }
+            }
+        });
+
+        function viewPhotos() {
+            const code = document.getElementById('photoCode').value;
+            if (code.trim() === '') {
+                alert('Please enter your photo code.');
+            } else {
+                // Show photos gallery
+                showPhotosGallery();
+            }
+        }
+
+        function showPhotosGallery() {
+            document.getElementById('uploadScreen').style.display = 'none';
+            document.getElementById('photosGalleryScreen').style.display = 'block';
+            
+            // Load photos
+            loadPhotos();
+        }
+
+        function loadPhotos() {
+            const grid = document.getElementById('mobilePhotosGrid');
+            grid.innerHTML = '';
+            
+            samplePhotos.forEach((photo, index) => {
+                const photoCard = document.createElement('div');
+                photoCard.className = 'mobile-photo-card';
+                photoCard.innerHTML = `
+                    <img src="${photo}" alt="Photo ${index + 1}" onerror="this.src='../assets/images/logo.png'">
+                    <button class="mobile-download-btn" onclick="downloadPhoto('${photo}', ${index + 1})">
+                        <i class="fa-solid fa-download"></i>
+                    </button>
+                `;
+                grid.appendChild(photoCard);
+            });
+        }
+
+        function downloadPhoto(photoUrl, photoNumber) {
+            const link = document.createElement('a');
+            link.href = photoUrl;
+            link.download = `phogator_photo_${photoNumber}.jpg`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Show download notification
+            const notification = document.createElement('div');
+            notification.className = 'download-notification';
+            notification.innerHTML = '<i class="fa-solid fa-check-circle"></i> Photo downloaded!';
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 2000);
+        }
+
+        // Auto-uppercase for code input
+        document.getElementById('photoCode').addEventListener('input', function(e) {
+            e.target.value = e.target.value.toUpperCase();
+        });
+
+        // Close profile modal when clicking outside
+        document.getElementById('profileModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeProfileModal();
+            }
+        });
+    </script>
+</body>
+</html>
