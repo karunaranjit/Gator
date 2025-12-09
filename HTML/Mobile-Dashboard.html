@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Dashboard - PhoGator</title>
+    <link rel="icon" type="image/png" href="../assets/images/logo.png">
+    <link rel="stylesheet" href="../CSS/Mobile-Dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <!-- Logo Section (from Mobile-Access design) -->
+    <div class="logo-container">
+        <img src="../assets/images/logo.png" alt="PhoGator Logo" class="main-logo">
+    </div>
+
+    <!-- Main Container -->
+    <div class="mobile-container">
+        <!-- Welcome Screen -->
+        <div class="screen active" id="welcomeScreen">
+            <div class="welcome-content">
+                <div class="welcome-header">
+                    <h1>Welcome to PhoGator</h1>
+                    <p>Find your memories instantly</p>
+                </div>
+
+                <!-- Option Cards -->
+                <div class="option-cards">
+                    <!-- Selfie Upload Option -->
+                    <div class="option-card" onclick="showSelfieUpload()">
+                        <div class="option-icon selfie">
+                            <i class="fa-solid fa-face-smile"></i>
+                        </div>
+                        <div class="option-content">
+                            <h3>Upload Selfie</h3>
+                            <p>Find photos with AI face matching</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right arrow"></i>
+                    </div>
+
+                    <!-- Enter Code Option -->
+                    <div class="option-card" onclick="showCodeEntry()">
+                        <div class="option-icon code">
+                            <i class="fa-solid fa-qrcode"></i>
+                        </div>
+                        <div class="option-content">
+                            <h3>Enter Code</h3>
+                            <p>Access with profile or event code</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right arrow"></i>
+                    </div>
+
+                    <!-- Create Account Option -->
+                    <div class="option-card" onclick="showCreateAccount()">
+                        <div class="option-icon account">
+                            <i class="fa-solid fa-user-plus"></i>
+                        </div>
+                        <div class="option-content">
+                            <h3>Create Account</h3>
+                            <p>Register for personalized access</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right arrow"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Selfie Upload Screen -->
+        <div class="screen" id="selfieScreen">
+            <button class="back-btn" onclick="goBack()">
+                <i class="fa-solid fa-arrow-left"></i>
+                Back
+            </button>
+            
+            <div class="screen-content">
+                <h2>Upload Your Selfie</h2>
+                <p>We'll find all photos with your face using AI</p>
+
+                <div class="selfie-upload-container">
+                    <div class="upload-area" id="uploadArea" onclick="document.getElementById('selfieInput').click()">
+                        <i class="fa-solid fa-camera"></i>
+                        <p>Tap to take or upload selfie</p>
+                        <span>Supports: JPG, PNG</span>
+                    </div>
+                    <input type="file" id="selfieInput" accept="image/*" capture="user" style="display: none;" onchange="handleSelfieUpload(event)">
+                    
+                    <div class="selfie-preview" id="selfiePreview" style="display: none;">
+                        <img id="previewImage" src="" alt="Selfie Preview">
+                        <button class="btn-remove" onclick="removeSelfie()">
+                            <i class="fa-solid fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <button class="btn-primary" id="findPhotosBtn" onclick="findPhotosBySelfie()" disabled>
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    Find My Photos
+                </button>
+
+                <div class="info-box">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>Your selfie is processed securely and not stored</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Code Entry Screen -->
+        <div class="screen" id="codeScreen">
+            <button class="back-btn" onclick="goBack()">
+                <i class="fa-solid fa-arrow-left"></i>
+                Back
+            </button>
+            
+            <div class="screen-content">
+                <h2>Enter Your Code</h2>
+                <p>Enter your profile code or event code</p>
+
+                <div class="code-input-container">
+                    <input type="text" id="codeInput" placeholder="Enter Code (e.g., ABC12345)" maxlength="15">
+                    <button class="btn-scan" onclick="scanQRCode()">
+                        <i class="fa-solid fa-qrcode"></i>
+                    </button>
+                </div>
+
+                <button class="btn-primary" onclick="submitCode()">
+                    <i class="fa-solid fa-arrow-right"></i>
+                    Continue
+                </button>
+
+                <div class="code-examples">
+                    <h4>Code Examples:</h4>
+                    <div class="example-item">
+                        <span class="example-badge profile">Profile</span>
+                        <span>ABC12345, USER98765</span>
+                    </div>
+                    <div class="example-item">
+                        <span class="example-badge event">Event</span>
+                        <span>EVT12345, WEDDING2025</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Create Account Screen -->
+        <div class="screen" id="createAccountScreen">
+            <button class="back-btn" onclick="goBack()">
+                <i class="fa-solid fa-arrow-left"></i>
+                Back
+            </button>
+            
+            <div class="screen-content">
+                <h2>Create Your Account</h2>
+                <p>Get your unique code to access photos anytime</p>
+
+                <form class="account-form" onsubmit="createAccount(event)">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="userName" placeholder="Enter your name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" id="userEmail" placeholder="your@email.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Phone Number (Optional)</label>
+                        <input type="tel" id="userPhone" placeholder="+1 (555) 000-0000">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Upload Selfie (Optional)</label>
+                        <div class="selfie-upload-small" onclick="document.getElementById('accountSelfie').click()">
+                            <i class="fa-solid fa-camera"></i>
+                            <span id="selfieFileName">No file chosen</span>
+                        </div>
+                        <input type="file" id="accountSelfie" accept="image/*" capture="user" style="display: none;" onchange="updateSelfieFileName()">
+                    </div>
+
+                    <button type="submit" class="btn-primary">
+                        <i class="fa-solid fa-user-check"></i>
+                        Create Account
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Matched Photos Screen (Selfie Results) -->
+        <div class="screen" id="matchedPhotosScreen">
+            <button class="back-btn" onclick="goBack()">
+                <i class="fa-solid fa-arrow-left"></i>
+                Back
+            </button>
+            
+            <div class="screen-content">
+                <h2>Your Matched Photos</h2>
+                <p id="matchCount">Found 0 photos with your face</p>
+
+                <div class="photos-grid" id="matchedPhotosGrid">
+                    <!-- Photos will be loaded here -->
+                </div>
+
+                <div class="no-photos" id="noPhotos" style="display: none;">
+                    <i class="fa-solid fa-image-slash"></i>
+                    <h3>No Photos Found</h3>
+                    <p>We couldn't find any photos matching your face. Try uploading a different selfie or check back later.</p>
+                    <button class="btn-secondary" onclick="showSelfieUpload()">
+                        Try Again
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- User Profile Screen (Profile Code) -->
+        <div class="screen" id="profileScreen">
+            <button class="back-btn" onclick="goBack()">
+                <i class="fa-solid fa-arrow-left"></i>
+                Back
+            </button>
+            
+            <div class="screen-content">
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <h2 id="profileName">User Name</h2>
+                    <p id="profileEmail">user@email.com</p>
+                    <div class="profile-code">
+                        <span id="displayCode">ABC12345</span>
+                        <button onclick="copyCode()"><i class="fa-solid fa-copy"></i></button>
+                    </div>
+                </div>
+
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <div class="stat-number" id="photosFound">0</div>
+                        <div class="stat-label">Photos Found</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="eventsAttended">0</div>
+                        <div class="stat-label">Events</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="memberSince">Dec 2025</div>
+                        <div class="stat-label">Member Since</div>
+                    </div>
+                </div>
+
+                <div class="profile-actions">
+                    <button class="action-btn" onclick="viewMyPhotos()">
+                        <i class="fa-solid fa-images"></i>
+                        View My Photos
+                    </button>
+                    <button class="action-btn" onclick="editProfile()">
+                        <i class="fa-solid fa-pen"></i>
+                        Edit Profile
+                    </button>
+                </div>
+
+                <div class="photos-grid" id="profilePhotosGrid">
+                    <!-- User's photos will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Event Photos Screen (Event Code) -->
+        <div class="screen" id="eventPhotosScreen">
+            <button class="back-btn" onclick="goBack()">
+                <i class="fa-solid fa-arrow-left"></i>
+                Back
+            </button>
+            
+            <div class="screen-content">
+                <div class="event-header">
+                    <div class="event-icon">
+                        <i class="fa-solid fa-calendar-days"></i>
+                    </div>
+                    <h2 id="eventName">Event Name</h2>
+                    <p id="eventDate">Date</p>
+                    <p id="eventLocation">Location</p>
+                </div>
+
+                <div class="event-stats">
+                    <div class="stat-item">
+                        <i class="fa-solid fa-images"></i>
+                        <span id="totalPhotos">0 Photos</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fa-solid fa-download"></i>
+                        <span id="downloads">0 Downloads</span>
+                    </div>
+                </div>
+
+                <div class="photos-grid" id="eventPhotosGrid">
+                    <!-- Event photos will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Modal -->
+        <div class="modal" id="successModal">
+            <div class="modal-content success">
+                <div class="modal-icon">
+                    <i class="fa-solid fa-check-circle"></i>
+                </div>
+                <h3>Account Created!</h3>
+                <p>Your unique code is:</p>
+                <div class="generated-code" id="generatedCode">ABC12345</div>
+                <p class="modal-note">Save this code to access your photos anytime</p>
+                <button class="btn-primary" onclick="closeSuccessModal()">Got it!</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../JS/mobile-dashboard.js"></script>
+</body>
+</html>

@@ -113,6 +113,63 @@
         <div class="mobile-photos-grid" id="mobilePhotosGrid">
             <!-- Photos will be loaded here dynamically -->
         </div>
+
+        <!-- Mobile Bottom Navigation -->
+        <div class="mobile-bottom-nav">
+            <div class="nav-items">
+                <button class="nav-item" onclick="navigateToHome()">
+                    <i class="fa-solid fa-house"></i>
+                </button>
+                <button class="nav-item" onclick="navigateToEvents()">
+                    <i class="fa-solid fa-calendar-days"></i>
+                </button>
+                <button class="nav-item active" onclick="navigateToGallery()">
+                    <i class="fa-solid fa-image"></i>
+                </button>
+                <button class="nav-item" onclick="showProfileModal()">
+                    <i class="fa-solid fa-user"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Events Screen (Initially Hidden) -->
+    <div class="events-screen" id="eventsScreen" style="display: none;">
+        <!-- Events Header -->
+        <div class="gallery-header">
+            <button class="back-btn" onclick="closeEventsScreen()">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <h3 style="color: white; margin: 0;">My Events</h3>
+            <div style="width: 40px;"></div>
+        </div>
+
+        <!-- Events Content -->
+        <div class="events-content">
+            <h2 style="text-align: center; color: #1a1a1a; margin-bottom: 2rem;">Events Attended</h2>
+            
+            <div class="events-list" id="eventsList">
+                <!-- Events will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Mobile Bottom Navigation -->
+        <div class="mobile-bottom-nav">
+            <div class="nav-items">
+                <button class="nav-item" onclick="navigateToHome()">
+                    <i class="fa-solid fa-house"></i>
+                </button>
+                <button class="nav-item active" onclick="navigateToEvents()">
+                    <i class="fa-solid fa-calendar-days"></i>
+                </button>
+                <button class="nav-item" onclick="navigateToGallery()">
+                    <i class="fa-solid fa-image"></i>
+                </button>
+                <button class="nav-item" onclick="showProfileModal()">
+                    <i class="fa-solid fa-user"></i>
+                </button>
+            </div>
+        </div>
     </div>
 
     <!-- Profile Modal (Initially Hidden) -->
@@ -131,6 +188,21 @@
                 </div>
                 <h2 class="profile-username">User's Name</h2>
                 <p class="profile-member-since">Member since 2025 14 December</p>
+                
+                <!-- User Code Display with Copy Button -->
+                <div class="profile-code-container">
+                    <p class="profile-code-label">Your Unique Code</p>
+                    <div class="profile-code-box">
+                        <span class="profile-code-display" id="userCodeDisplay"></span>
+                        <button class="copy-code-btn" onclick="copyUserCode()">
+                            <i class="fa-solid fa-copy"></i>
+                        </button>
+                    </div>
+                    <p class="profile-code-warning">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        Keep this code private. Anyone with this code can access your profile and photos.
+                    </p>
+                </div>
 
                 <div class="profile-options">
                     <button class="profile-option-btn">
@@ -155,9 +227,25 @@
         </div>
     </div>
 
+    <!-- Warning Modal for Code Copy -->
+    <div class="warning-modal" id="warningModal">
+        <div class="warning-modal-content">
+            <div class="warning-icon">
+                <i class="fa-solid fa-shield-exclamation"></i>
+            </div>
+            <h3>Security Warning!</h3>
+            <p>If you share this code with others, they will have access to your profile and all your photos.</p>
+            <p style="margin-top: 1rem; font-weight: 600;">Are you sure you want to copy this code?</p>
+            <div class="warning-buttons">
+                <button class="warning-btn cancel-btn" onclick="closeWarningModal()">Cancel</button>
+                <button class="warning-btn confirm-btn" onclick="confirmCopyCode()">Yes, Copy Code</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Sample photos data
-        const samplePhotos = [
+        // Sample photos for demonstration
+        const allPhotos = [
             '../assets/images/wedding.jpg',
             '../assets/images/birthday.jpg',
             '../assets/images/concert.jpg',
@@ -167,6 +255,129 @@
             '../assets/images/brataman.jpg',
             '../assets/images/family.jpeg'
         ];
+
+        // User profiles database (in production, this comes from backend)
+        const userProfiles = {
+            'ABC12345': {
+                name: 'Aayush Sharma',
+                email: 'aayush@example.com',
+                memberSince: 'Nov 2025',
+                photosFound: 47,
+                eventsAttended: 3,
+                avatar: null,
+                events: [
+                    { id: 'EVT001', name: 'Summer Wedding', date: '2025-06-15', photos: 23 },
+                    { id: 'EVT002', name: 'College Fest 2025', date: '2025-08-20', photos: 18 },
+                    { id: 'EVT003', name: 'Birthday Party', date: '2025-11-10', photos: 6 }
+                ]
+            },
+            'XYZ67890': {
+                name: 'John Doe',
+                email: 'john@example.com',
+                memberSince: 'Dec 2025',
+                photosFound: 32,
+                eventsAttended: 2,
+                avatar: null,
+                events: [
+                    { id: 'EVT004', name: 'Music Concert', date: '2025-09-05', photos: 20 },
+                    { id: 'EVT005', name: 'Family Reunion', date: '2025-12-01', photos: 12 }
+                ]
+            }
+        };
+
+        let currentUserCode = null;
+
+        // Generate permanent unique code
+        function generatePermanentCode() {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            ctx.textBaseline = 'top';
+            ctx.font = '14px Arial';
+            ctx.fillText('fingerprint', 2, 2);
+            const canvasData = canvas.toDataURL();
+            
+            const fingerprint = navigator.userAgent + 
+                              navigator.language + 
+                              screen.width + 
+                              screen.height + 
+                              new Date().getTimezoneOffset() +
+                              canvasData;
+            
+            let hash = 0;
+            for (let i = 0; i < fingerprint.length; i++) {
+                const char = fingerprint.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash;
+            }
+            
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let code = '';
+            let tempHash = Math.abs(hash);
+            
+            for (let i = 0; i < 8; i++) {
+                code += chars[tempHash % chars.length];
+                tempHash = Math.floor(tempHash / chars.length);
+            }
+            
+            return code;
+        }
+
+        function getUserPhotoCode() {
+            let userCode = localStorage.getItem('userPhotoCode');
+            
+            if (!userCode) {
+                userCode = generatePermanentCode();
+                localStorage.setItem('userPhotoCode', userCode);
+                
+                const memberSince = new Date().toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'short'
+                });
+                localStorage.setItem('memberSince', memberSince);
+                
+                console.log('✅ NEW USER CODE CREATED:', userCode);
+            } else {
+                console.log('✅ EXISTING USER CODE LOADED:', userCode);
+            }
+            
+            return userCode;
+        }
+
+        // Create user profile when they first login with a code
+        function createOrGetUserProfile(userCode) {
+            // Check if user already exists in database
+            if (userProfiles[userCode]) {
+                return userProfiles[userCode];
+            }
+            
+            // Create new user profile
+            const currentDate = new Date();
+            const newProfile = {
+                name: "User's Name",
+                email: '',
+                memberSince: currentDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short' }),
+                photosFound: 0,
+                eventsAttended: 0,
+                avatar: null,
+                events: []
+            };
+            
+            // Store in localStorage for persistence
+            const storedProfiles = JSON.parse(localStorage.getItem('userProfiles') || '{}');
+            storedProfiles[userCode] = newProfile;
+            localStorage.setItem('userProfiles', JSON.stringify(storedProfiles));
+            
+            // Add to runtime database
+            userProfiles[userCode] = newProfile;
+            
+            return newProfile;
+        }
+
+        // Load stored profiles on page load
+        function loadStoredProfiles() {
+            const storedProfiles = JSON.parse(localStorage.getItem('userProfiles') || '{}');
+            Object.assign(userProfiles, storedProfiles);
+        }
 
         function showUploadPage() {
             document.getElementById('welcomeScreen').style.display = 'none';
@@ -179,6 +390,23 @@
         }
 
         function showProfileModal() {
+            const loggedInCode = localStorage.getItem('currentUserCode');
+            
+            if (loggedInCode && userProfiles[loggedInCode]) {
+                const profile = userProfiles[loggedInCode];
+                document.querySelector('.profile-username').textContent = profile.name;
+                document.querySelector('.profile-member-since').textContent = `Member since ${profile.memberSince}`;
+                document.getElementById('userCodeDisplay').textContent = loggedInCode;
+            } else {
+                const userCode = getUserPhotoCode();
+                const memberSince = localStorage.getItem('memberSince');
+                const userName = localStorage.getItem('userName') || "User's Name";
+
+                document.querySelector('.profile-username').textContent = userName;
+                document.querySelector('.profile-member-since').textContent = `Member since ${memberSince}`;
+                document.getElementById('userCodeDisplay').textContent = userCode;
+            }
+
             document.getElementById('profileModal').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
@@ -188,13 +416,148 @@
             document.body.style.overflow = 'auto';
         }
 
+        function copyUserCode() {
+            document.getElementById('warningModal').classList.add('active');
+        }
+
+        function closeWarningModal() {
+            document.getElementById('warningModal').classList.remove('active');
+        }
+
+        function confirmCopyCode() {
+            const displayedCode = document.getElementById('userCodeDisplay').textContent;
+            
+            navigator.clipboard.writeText(displayedCode).then(() => {
+                closeWarningModal();
+                
+                const notification = document.createElement('div');
+                notification.className = 'download-notification';
+                notification.innerHTML = '<i class="fa-solid fa-check-circle"></i> Code copied! Keep it safe.';
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.classList.add('show');
+                }, 100);
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 300);
+                }, 2500);
+            }).catch(() => {
+                const textArea = document.createElement('textarea');
+                textArea.value = displayedCode;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                closeWarningModal();
+                alert('Code copied!');
+            });
+        }
+
+        function navigateToHome() {
+            const loggedInCode = localStorage.getItem('currentUserCode');
+            
+            if (loggedInCode && userProfiles[loggedInCode]) {
+                // Redirect to User Dashboard with the logged-in user's code
+                window.location.href = `./User-Dashboard.html?code=${loggedInCode}`;
+            } else {
+                // Redirect to regular home page
+                window.location.href = './Home.html';
+            }
+        }
+
+        function navigateToEvents() {
+            document.getElementById('photosGalleryScreen').style.display = 'none';
+            document.getElementById('uploadScreen').style.display = 'none';
+            document.getElementById('welcomeScreen').style.display = 'none';
+            
+            document.getElementById('eventsScreen').style.display = 'block';
+            
+            loadEvents();
+        }
+
+        function closeEventsScreen() {
+            document.getElementById('eventsScreen').style.display = 'none';
+            document.getElementById('photosGalleryScreen').style.display = 'block';
+        }
+
+        function loadEvents() {
+            const eventsList = document.getElementById('eventsList');
+            const loggedInCode = localStorage.getItem('currentUserCode');
+            
+            if (!loggedInCode || !userProfiles[loggedInCode]) {
+                eventsList.innerHTML = `
+                    <div style="text-align: center; padding: 3rem; color: #666;">
+                        <i class="fa-solid fa-calendar-xmark" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                        <p style="font-size: 1.1rem;">No events found</p>
+                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Please log in with your user code to see your events.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const profile = userProfiles[loggedInCode];
+            eventsList.innerHTML = '';
+            
+            if (profile.events.length === 0) {
+                eventsList.innerHTML = `
+                    <div style="text-align: center; padding: 3rem; color: #666;">
+                        <i class="fa-solid fa-calendar-xmark" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                        <p style="font-size: 1.1rem;">No events attended yet</p>
+                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Attend an event to see your photos here!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            profile.events.forEach(event => {
+                const eventCard = document.createElement('div');
+                eventCard.className = 'event-card';
+                eventCard.onclick = () => viewEventPhotos(event.id);
+                eventCard.innerHTML = `
+                    <div class="event-icon">
+                        <i class="fa-solid fa-calendar-check"></i>
+                    </div>
+                    <div class="event-details">
+                        <h3>${event.name}</h3>
+                        <p class="event-date"><i class="fa-solid fa-clock"></i> ${new Date(event.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                        <p class="event-photos"><i class="fa-solid fa-images"></i> ${event.photos} Photos</p>
+                    </div>
+                    <div class="event-arrow">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                `;
+                eventsList.appendChild(eventCard);
+            });
+        }
+
+        function viewEventPhotos(eventId) {
+            document.getElementById('eventsScreen').style.display = 'none';
+            showPhotosGallery(eventId);
+        }
+
+        function navigateToGallery() {
+            const loggedInCode = localStorage.getItem('currentUserCode');
+            
+            if (!loggedInCode) {
+                document.getElementById('eventsScreen').style.display = 'none';
+                document.getElementById('uploadScreen').style.display = 'block';
+            } else {
+                document.getElementById('eventsScreen').style.display = 'none';
+                document.getElementById('photosGalleryScreen').style.display = 'block';
+            }
+        }
+
         const fileInput = document.getElementById('fileInput');
 
         fileInput.addEventListener('change', (e) => {
             if (e.target.files.length > 0) {
                 const file = e.target.files[0];
                 if (file.type.match('image/jpeg') || file.type.match('image/png')) {
-                    // Show photos gallery
                     showPhotosGallery();
                 } else {
                     alert('Please upload a JPG or PNG file.');
@@ -203,49 +566,99 @@
         });
 
         function viewPhotos() {
-            const code = document.getElementById('photoCode').value;
-            if (code.trim() === '') {
-                alert('Please enter your photo code.');
-            } else {
-                // Show photos gallery
-                showPhotosGallery();
+            const inputCode = document.getElementById('photoCode').value.trim().toUpperCase();
+            
+            if (inputCode === '') {
+                alert('Please enter a code.');
+                return;
             }
+
+            // Create or get user profile
+            const profile = createOrGetUserProfile(inputCode);
+            
+            // Store logged-in user code
+            localStorage.setItem('currentUserCode', inputCode);
+            currentUserCode = inputCode;
+            
+            // Show user profile
+            showUserProfile(inputCode);
         }
 
-        function showPhotosGallery() {
+        function showUserProfile(userCode) {
+            const profile = userProfiles[userCode];
+            
+            document.querySelector('.profile-username').textContent = profile.name;
+            document.querySelector('.profile-member-since').textContent = `Member since ${profile.memberSince}`;
+            document.getElementById('userCodeDisplay').textContent = userCode;
+            
+            document.getElementById('uploadScreen').style.display = 'none';
+            document.getElementById('profileModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            const notification = document.createElement('div');
+            notification.className = 'download-notification';
+            notification.innerHTML = `<i class="fa-solid fa-user-check"></i> Welcome, ${profile.name}!`;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 2000);
+        }
+
+        function showPhotosGallery(eventCode = null) {
             document.getElementById('uploadScreen').style.display = 'none';
             document.getElementById('photosGalleryScreen').style.display = 'block';
             
-            // Load photos
-            loadPhotos();
+            loadPhotos(eventCode);
         }
 
-        function loadPhotos() {
+        function loadPhotos(eventCode) {
             const grid = document.getElementById('mobilePhotosGrid');
             grid.innerHTML = '';
             
-            samplePhotos.forEach((photo, index) => {
+            if (eventCode) {
+                document.querySelector('.gallery-title h2').textContent = `Photos from Event ${eventCode}`;
+            } else {
+                document.querySelector('.gallery-title h2').textContent = 'Photos of You';
+            }
+            
+            allPhotos.forEach((photo, index) => {
                 const photoCard = document.createElement('div');
                 photoCard.className = 'mobile-photo-card';
                 photoCard.innerHTML = `
                     <img src="${photo}" alt="Photo ${index + 1}" onerror="this.src='../assets/images/logo.png'">
-                    <button class="mobile-download-btn" onclick="downloadPhoto('${photo}', ${index + 1})">
+                    <button class="mobile-download-btn" onclick="downloadPhoto('${photo}', ${index + 1}, '${eventCode || 'unknown'}')">
                         <i class="fa-solid fa-download"></i>
                     </button>
                 `;
                 grid.appendChild(photoCard);
             });
+
+            if (allPhotos.length === 0) {
+                grid.innerHTML = `
+                    <div style="text-align: center; color: #666; padding: 3rem;">
+                        <i class="fa-solid fa-images" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                        <p style="font-size: 1.1rem;">No photos found.</p>
+                    </div>
+                `;
+            }
         }
 
-        function downloadPhoto(photoUrl, photoNumber) {
+        function downloadPhoto(photoUrl, photoNumber, eventCode) {
             const link = document.createElement('a');
             link.href = photoUrl;
-            link.download = `phogator_photo_${photoNumber}.jpg`;
+            link.download = `phogator_${eventCode}_photo_${photoNumber}.jpg`;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
             
-            // Show download notification
             const notification = document.createElement('div');
             notification.className = 'download-notification';
             notification.innerHTML = '<i class="fa-solid fa-check-circle"></i> Photo downloaded!';
@@ -263,16 +676,31 @@
             }, 2000);
         }
 
-        // Auto-uppercase for code input
         document.getElementById('photoCode').addEventListener('input', function(e) {
             e.target.value = e.target.value.toUpperCase();
         });
 
-        // Close profile modal when clicking outside
         document.getElementById('profileModal').addEventListener('click', function(e) {
             if (e.target === this) {
                 closeProfileModal();
             }
+        });
+
+        document.getElementById('warningModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeWarningModal();
+            }
+        });
+
+        window.addEventListener('DOMContentLoaded', function() {
+            // Load stored user profiles
+            loadStoredProfiles();
+            
+            const userCode = getUserPhotoCode();
+            console.log('═══════════════════════════════════════');
+            console.log('YOUR PERMANENT USER CODE:', userCode);
+            console.log('This code will NEVER change');
+            console.log('═══════════════════════════════════════');
         });
     </script>
 </body>

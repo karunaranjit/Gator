@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photographer Dashboard - PhoGator</title>
+    <link rel="icon" type="image/png" href="../assets/images/logo.png">
+    <link rel="stylesheet" href="../CSS/Photographer-Dashboard.css">
+    <link rel="stylesheet" href="../CSS/Footer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <!-- Custom Header for Dashboard -->
+    <header class="dashboard-header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="./Home.html" class="logo">
+                    <img src="../assets/images/logo.png" alt="PhoGator Logo">
+                    <span>PhoGator</span>
+                </a>
+                
+                <div class="header-right">
+                    <button class="home-btn" onclick="window.location.href='./Home.html'">
+                        <i class="fa-solid fa-home"></i>
+                        Home
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Photographer Dashboard -->
+    <section class="photographer-dashboard">
+        <div class="dashboard-container">
+            <!-- Dashboard Title -->
+            <div class="dashboard-title">
+                <div class="title-left">
+                    <div class="photographer-icon">
+                        <i class="fa-solid fa-camera"></i>
+                    </div>
+                    <div>
+                        <h1>Photographer Dashboard</h1>
+                        <p>Manage your events and track engagement</p>
+                    </div>
+                </div>
+                <div class="title-right">
+                    <button class="btn-settings" onclick="openSettingsModal()">
+                        <i class="fa-solid fa-gear"></i>
+                        Settings
+                    </button>
+                    <button class="btn-new-event" onclick="window.location.href='./Occasions.html'">
+                        <i class="fa-solid fa-plus"></i>
+                        New Event
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card blue">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-calendar"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number">0</div>
+                        <div class="stat-label">Total Events</div>
+                    </div>
+                    <div class="stat-trend positive">
+                        <i class="fa-solid fa-arrow-up"></i>
+                        +0%
+                    </div>
+                </div>
+
+                <div class="stat-card green">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-image"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number">0</div>
+                        <div class="stat-label">Photos Uploaded</div>
+                    </div>
+                    <div class="stat-trend positive">
+                        <i class="fa-solid fa-arrow-up"></i>
+                        +0%
+                    </div>
+                </div>
+
+                <div class="stat-card purple">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-download"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number">0</div>
+                        <div class="stat-label">Guest Downloads</div>
+                    </div>
+                    <div class="stat-trend positive">
+                        <i class="fa-solid fa-arrow-up"></i>
+                        +0%
+                    </div>
+                </div>
+
+                <div class="stat-card orange">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-qrcode"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number">0</div>
+                        <div class="stat-label">Active Codes</div>
+                    </div>
+                    <div class="stat-trend positive">
+                        <i class="fa-solid fa-arrow-up"></i>
+                        +0%
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <div class="dashboard-tabs">
+                <button class="tab-btn active" onclick="showTab('overview')">
+                    <i class="fa-solid fa-chart-line"></i>
+                    Overview
+                </button>
+                <button class="tab-btn" onclick="showTab('events')">
+                    <i class="fa-solid fa-calendar"></i>
+                    Events
+                </button>
+                <button class="tab-btn" onclick="showTab('analytics')">
+                    <i class="fa-solid fa-chart-bar"></i>
+                    Analytics
+                </button>
+                <button class="tab-btn" onclick="showTab('qrcodes')">
+                    <i class="fa-solid fa-qrcode"></i>
+                    QR Codes
+                </button>
+            </div>
+
+            <!-- Overview Tab -->
+            <div class="tab-content" id="overviewTab">
+                <div class="content-grid">
+                    <!-- Recent Events Section -->
+                    <div class="content-section">
+                        <div class="section-header">
+                            <h2>
+                                <i class="fa-solid fa-calendar-days"></i>
+                                Recent Events
+                            </h2>
+                        </div>
+                        <div class="empty-state">
+                            <i class="fa-solid fa-calendar-xmark"></i>
+                            <h3>No Events Yet</h3>
+                            <p>Create your first event to start tracking photos and engagement</p>
+                            <button class="btn-new-event" onclick="window.location.href='./Occasions.html'">
+                                Create Event
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions Section -->
+                    <div class="content-section">
+                        <div class="section-header">
+                            <h2>
+                                <i class="fa-solid fa-bolt"></i>
+                                Quick Actions
+                            </h2>
+                        </div>
+                        <div class="quick-actions-grid">
+                            <div class="quick-action-card" onclick="window.location.href='./Occasions.html'">
+                                <div class="quick-action-icon blue">
+                                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                                </div>
+                                <h4>Upload Photos</h4>
+                                <p>Add photos to your events</p>
+                            </div>
+
+                            <div class="quick-action-card" onclick="alert('Generate QR feature coming soon!')">
+                                <div class="quick-action-icon purple">
+                                    <i class="fa-solid fa-qrcode"></i>
+                                </div>
+                                <h4>Generate QR</h4>
+                                <p>Create QR codes for events</p>
+                            </div>
+
+                            <div class="quick-action-card" onclick="alert('View Guests feature coming soon!')">
+                                <div class="quick-action-icon green">
+                                    <i class="fa-solid fa-users"></i>
+                                </div>
+                                <h4>View Guests</h4>
+                                <p>See who accessed your photos</p>
+                            </div>
+
+                            <div class="quick-action-card" onclick="alert('Analytics feature coming soon!')">
+                                <div class="quick-action-icon orange">
+                                    <i class="fa-solid fa-chart-pie"></i>
+                                </div>
+                                <h4>Analytics</h4>
+                                <p>View detailed statistics</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Processing Status -->
+                <div class="content-section ai-status-section">
+                    <div class="ai-status-card">
+                        <div class="ai-status-header">
+                            <div class="ai-status-icon">
+                                <i class="fa-solid fa-robot"></i>
+                            </div>
+                            <div>
+                                <h3>AI Processing Active</h3>
+                                <p>Currently processing 0 photos for face matching</p>
+                            </div>
+                        </div>
+                        <div class="ai-progress-bar">
+                            <div class="ai-progress-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Events Tab -->
+            <div class="tab-content" id="eventsTab" style="display: none;">
+                <div class="empty-state">
+                    <i class="fa-solid fa-calendar"></i>
+                    <h3>No Events Created</h3>
+                    <p>Start by creating your first event</p>
+                    <button class="btn-new-event" onclick="window.location.href='./Occasions.html'">
+                        Create First Event
+                    </button>
+                </div>
+            </div>
+
+            <!-- Analytics Tab -->
+            <div class="tab-content" id="analyticsTab" style="display: none;">
+                <div class="empty-state">
+                    <i class="fa-solid fa-chart-bar"></i>
+                    <h3>No Analytics Data</h3>
+                    <p>Analytics will appear once you create events and upload photos</p>
+                </div>
+            </div>
+
+            <!-- QR Codes Tab -->
+            <div class="tab-content" id="qrcodesTab" style="display: none;">
+                <div class="empty-state">
+                    <i class="fa-solid fa-qrcode"></i>
+                    <h3>No QR Codes Generated</h3>
+                    <p>Create an event to generate QR codes for guest access</p>
+                    <button class="btn-new-event" onclick="window.location.href='./Occasions.html'">
+                        Create Event
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Settings Modal -->
+    <div class="settings-modal" id="settingsModal">
+        <div class="settings-modal-content">
+            <div class="settings-modal-header">
+                <h2>Settings</h2>
+                <button class="settings-close-btn" onclick="closeSettingsModal()">
+                    <i class="fa-solid fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="settings-options">
+                <div class="settings-option" onclick="alert('Account Settings coming soon!')">
+                    <div class="settings-option-left">
+                        <div class="settings-option-icon">
+                            <i class="fa-solid fa-user-cog"></i>
+                        </div>
+                        <div class="settings-option-text">
+                            <h4>Account Settings</h4>
+                            <p>Manage your photographer account</p>
+                        </div>
+                    </div>
+                    <div class="settings-option-arrow">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+
+                <div class="settings-option" onclick="alert('Notification Settings coming soon!')">
+                    <div class="settings-option-left">
+                        <div class="settings-option-icon">
+                            <i class="fa-solid fa-bell"></i>
+                        </div>
+                        <div class="settings-option-text">
+                            <h4>Notifications</h4>
+                            <p>Configure notification preferences</p>
+                        </div>
+                    </div>
+                    <div class="settings-option-arrow">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+
+                <div class="settings-option" onclick="alert('Storage Settings coming soon!')">
+                    <div class="settings-option-left">
+                        <div class="settings-option-icon">
+                            <i class="fa-solid fa-database"></i>
+                        </div>
+                        <div class="settings-option-text">
+                            <h4>Storage & Backup</h4>
+                            <p>Manage storage and backups</p>
+                        </div>
+                    </div>
+                    <div class="settings-option-arrow">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+
+                <div class="settings-option" onclick="alert('Help & Support coming soon!')">
+                    <div class="settings-option-left">
+                        <div class="settings-option-icon">
+                            <i class="fa-solid fa-life-ring"></i>
+                        </div>
+                        <div class="settings-option-text">
+                            <h4>Help & Support</h4>
+                            <p>Get help or contact support</p>
+                        </div>
+                    </div>
+                    <div class="settings-option-arrow">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+
+            <button class="settings-logout-btn" onclick="logout()">
+                <i class="fa-solid fa-sign-out-alt"></i>
+                Logout
+            </button>
+        </div>
+    </div>
+
+    <!-- Include Footer -->
+    <div id="footer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load Footer
+            fetch('./Footer.html')
+                .then(response => response.text())
+                .then(data => document.getElementById('footer').innerHTML = data);
+        });
+
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => content.style.display = 'none');
+            
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected tab and mark button as active
+            event.target.closest('.tab-btn').classList.add('active');
+            document.getElementById(tabName + 'Tab').style.display = 'block';
+        }
+
+        function openSettingsModal() {
+            const modal = document.getElementById('settingsModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSettingsModal() {
+            const modal = document.getElementById('settingsModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                alert('Logging out...');
+                window.location.href = './Home.html';
+            }
+        }
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function(e) {
+            if (e.target.id === 'settingsModal') {
+                closeSettingsModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeSettingsModal();
+            }
+        });
+    </script>
+</body>
+</html>

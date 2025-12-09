@@ -29,6 +29,14 @@
     padding: 0 2rem;
 }
 
+/* Center the last item if it's alone */
+.occasions-grid > .occasion-item:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+}
+
 .occasion-item {
     background: white;
     border-radius: 20px;
@@ -227,6 +235,46 @@
     box-shadow: 0 5px 20px rgba(124, 58, 237, 0.4);
 }
 
+/* Your Event Special Card */
+.your-event-card {
+    border: 2px dashed #B7A8F9;
+    background: linear-gradient(135deg, rgba(183, 168, 249, 0.1) 0%, rgba(183, 168, 249, 0.05) 100%);
+}
+
+.your-event-image {
+    background: linear-gradient(135deg, #B7A8F9 0%, #9b8de0 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.your-event-icon {
+    font-size: 5rem;
+    color: white;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+}
+
+.your-event-card .occasion-info h2 {
+    color: #B7A8F9;
+}
+
+.your-event-card:hover {
+    border-color: #9b8de0;
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(183, 168, 249, 0.3);
+}
+
 /* Responsive */
 @media (max-width: 1200px) {
     .occasions-grid {
@@ -244,6 +292,12 @@
         grid-template-columns: 1fr;
         gap: 2rem;
         padding: 0 1rem;
+    }
+
+    /* Reset centering on mobile since it's single column */
+    .occasions-grid > .occasion-item:last-child:nth-child(odd) {
+        grid-column: auto;
+        max-width: 100%;
     }
 
     .occasions-page h1 {

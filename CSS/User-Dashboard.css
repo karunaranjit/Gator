@@ -179,6 +179,7 @@
 #userPhotoCode {
     position: relative;
     transition: all 0.3s ease;
+    user-select: none; /* Prevent accidental text selection */
 }
 
 #userPhotoCode:hover {
@@ -196,6 +197,20 @@
 
 #userPhotoCode:hover::after {
     opacity: 1;
+}
+
+/* Code Lock Indicator */
+.stat-item:has(#userPhotoCode)::before {
+    content: '🔒';
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    font-size: 0.8rem;
+    opacity: 0.5;
+}
+
+.stat-item {
+    position: relative;
 }
 
 .stat-item p {

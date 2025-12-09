@@ -348,38 +348,156 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Load Header
+            fetch('./Header.html')
+                .then(response => response.text())
+                .then(data => document.getElementById('header').innerHTML = data);
+
             // Load Footer
             fetch('./Footer.html')
                 .then(response => response.text())
                 .then(data => document.getElementById('footer').innerHTML = data);
             
-            // Generate random photo code
-            generatePhotoCode();
+            // Check if user code is passed via URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const userCode = urlParams.get('code');
+            
+            if (userCode) {
+                loadUserDashboard(userCode);
+            } else {
+                // Load default/device-based profile
+                loadUserPhotoCode();
+            }
         });
 
-        function generatePhotoCode() {
-            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let code = '';
-            for (let i = 0; i < 6; i++) {
-                code += characters.charAt(Math.floor(Math.random() * characters.length));
+        function loadUserDashboard(userCode) {
+            // Get user profiles from localStorage
+            const storedProfiles = JSON.parse(localStorage.getItem('userProfiles') || '{}');
+            
+            // Merge with default profiles
+            const userProfiles = {
+                'ABC12345': {
+                    name: 'Aayush Sharma',
+                    email: 'aayush@example.com',
+                    memberSince: 'Nov 2025',
+                    photosFound: 47,
+                    eventsAttended: 3
+                },
+                'XYZ67890': {
+                    name: 'John Doe',
+                    email: 'john@example.com',
+                    memberSince: 'Dec 2025',
+                    photosFound: 32,
+                    eventsAttended: 2
+                },
+                ...storedProfiles
+            };
+            
+            const profile = userProfiles[userCode];
+            
+            if (profile) {
+                // Update dashboard with real user data
+                document.querySelector('.profile-details h2').textContent = profile.name;
+                document.querySelector('.profile-details p').textContent = profile.email;
+                document.querySelector('.profile-member-since').textContent = `Member since ${profile.memberSince}`;
+                document.getElementById('userPhotoCode').textContent = userCode;
+                
+                // Update stats
+                const statItems = document.querySelectorAll('.stat-item h3');
+                if (statItems.length >= 3) {
+                    statItems[0].textContent = profile.photosFound;
+                    statItems[1].textContent = profile.eventsAttended;
+                }
+                
+                // Store in localStorage
+                localStorage.setItem('currentUserCode', userCode);
+                localStorage.setItem('userName', profile.name);
+                localStorage.setItem('userEmail', profile.email);
             }
-            document.getElementById('userPhotoCode').textContent = code;
+        }
+
+        // Generate permanent unique code based on device fingerprint
+        function generatePermanentCode() {
+            // Use navigator properties to create a semi-unique fingerprint
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            ctx.textBaseline = 'top';
+            ctx.font = '14px Arial';
+            ctx.fillText('fingerprint', 2, 2);
+            const canvasData = canvas.toDataURL();
+            
+            const fingerprint = navigator.userAgent + 
+                              navigator.language + 
+                              screen.width + 
+                              screen.height + 
+                              new Date().getTimezoneOffset() +
+                              canvasData;
+            
+            // Create hash from fingerprint
+            let hash = 0;
+            for (let i = 0; i < fingerprint.length; i++) {
+                const char = fingerprint.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash;
+            }
+            
+            // Convert hash to alphanumeric code
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let code = '';
+            let tempHash = Math.abs(hash);
+            
+            for (let i = 0; i < 8; i++) {
+                code += chars[tempHash % chars.length];
+                tempHash = Math.floor(tempHash / chars.length);
+            }
+            
+            return code;
+        }
+
+        function loadUserPhotoCode() {
+            let userCode = localStorage.getItem('userPhotoCode');
+            
+            if (!userCode) {
+                // Generate permanent code
+                userCode = generatePermanentCode();
+                localStorage.setItem('userPhotoCode', userCode);
+                
+                // Set member since date
+                const memberSince = new Date().toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'short'
+                });
+                localStorage.setItem('memberSince', memberSince);
+                
+                console.log('✅ NEW USER CODE CREATED:', userCode);
+            } else {
+                console.log('✅ EXISTING USER CODE LOADED:', userCode);
+            }
+            
+            // Update UI with the code
+            document.getElementById('userPhotoCode').textContent = userCode;
+            
+            return userCode;
         }
 
         function copyPhotoCode() {
             const code = document.getElementById('userPhotoCode').textContent;
-            navigator.clipboard.writeText(code).then(() => {
-                alert('Photo code copied: ' + code + '\n\nUse this code in the Mobile Access page to view your photos!');
-            }).catch(() => {
-                // Fallback for older browsers
-                const textArea = document.createElement('textarea');
-                textArea.value = code;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                alert('Photo code copied: ' + code + '\n\nUse this code in the Mobile Access page to view your photos!');
-            });
+            
+            // Show warning before copying
+            if (confirm('⚠️ WARNING: If you share this code with others, they will have access to your profile and all your photos.\n\nAre you sure you want to copy this code?')) {
+                navigator.clipboard.writeText(code).then(() => {
+                    alert('✅ Photo code copied: ' + code + '\n\n⚠️ Keep this code private!\n\nUse this code in the Mobile Access page to view your photos.');
+                }).catch(() => {
+                    // Fallback for older browsers
+                    const textArea = document.createElement('textarea');
+                    textArea.value = code;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    alert('✅ Photo code copied: ' + code + '\n\n⚠️ Keep this code private!');
+                });
+            }
         }
 
         function showTab(tabName) {
