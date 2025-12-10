@@ -1,4 +1,4 @@
-let currentScreen = 'welcomeScreen';
+let currentScreen = 'landingScreen';
 let uploadedSelfie = null;
 
 // Screen Navigation
@@ -8,21 +8,12 @@ function showScreen(screenId) {
     });
     document.getElementById(screenId).classList.add('active');
     currentScreen = screenId;
-    
-    // Show back button except on welcome screen
-    const backBtn = document.querySelector('.back-btn');
-    if (screenId === 'welcomeScreen') {
-        backBtn.style.display = 'none';
-    } else {
-        backBtn.style.display = 'flex';
-    }
 }
 
-function goBack() {
+function showWelcomeScreen() {
     showScreen('welcomeScreen');
 }
 
-// Option Handlers
 function showSelfieUpload() {
     showScreen('selfieScreen');
 }
@@ -31,11 +22,95 @@ function showCodeEntry() {
     showScreen('codeScreen');
 }
 
-function showCreateAccount() {
-    showScreen('createAccountScreen');
+function showUserLogin() {
+    showScreen('loginScreen');
 }
 
-// Selfie Upload Handler
+function showUserSignup() {
+    showScreen('signupScreen');
+}
+
+function goBack() {
+    showScreen('welcomeScreen');
+}
+
+// User Login/Signup Functions
+function handleUserLogin(event) {
+    event.preventDefault();
+    
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    
+    // Use shared data layer (will connect to real backend later)
+    const result = SharedData.login(email, password);
+    
+    if (result.success) {
+        // Update profile UI with user data
+        document.getElementById('profileName').textContent = result.user.name;
+        document.getElementById('profileEmail').textContent = result.user.email;
+        document.getElementById('displayCode').textContent = result.user.code;
+        
+        showScreen('profileScreen');
+        loadProfilePhotos();
+    } else {
+        alert(result.message || 'Login failed');
+    }
+}
+
+function handleUserSignup(event) {
+    event.preventDefault();
+    
+    const name = document.getElementById('signupName').value;
+    const email = document.getElementById('signupEmail').value;
+    const password = document.getElementById('signupPassword').value;
+    
+    // Use shared data layer (will connect to real backend later)
+    const result = SharedData.signup(name, email, password);
+    
+    if (result.success) {
+        // Update profile UI with user data
+        document.getElementById('profileName').textContent = result.user.name;
+        document.getElementById('profileEmail').textContent = result.user.email;
+        document.getElementById('displayCode').textContent = result.user.code;
+        
+        showScreen('profileScreen');
+        loadProfilePhotos();
+    } else {
+        alert(result.message || 'Signup failed');
+    }
+}
+
+function toggleLoginPassword() {
+    const passwordInput = document.getElementById('loginPassword');
+    const eyeIcon = document.getElementById('loginEyeIcon');
+    
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        eyeIcon.classList.remove('fa-eye');
+        eyeIcon.classList.add('fa-eye-slash');
+    } else {
+        passwordInput.type = 'password';
+        eyeIcon.classList.remove('fa-eye-slash');
+        eyeIcon.classList.add('fa-eye');
+    }
+}
+
+function toggleSignupPassword() {
+    const passwordInput = document.getElementById('signupPassword');
+    const eyeIcon = document.getElementById('signupEyeIcon');
+    
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        eyeIcon.classList.remove('fa-eye');
+        eyeIcon.classList.add('fa-eye-slash');
+    } else {
+        passwordInput.type = 'password';
+        eyeIcon.classList.remove('fa-eye-slash');
+        eyeIcon.classList.add('fa-eye');
+    }
+}
+
+// Selfie Upload Handling
 function handleSelfieUpload(event) {
     const file = event.target.files[0];
     if (file) {
@@ -55,286 +130,224 @@ function removeSelfie() {
     uploadedSelfie = null;
     document.getElementById('uploadArea').style.display = 'block';
     document.getElementById('selfiePreview').style.display = 'none';
+    document.getElementById('previewImage').src = '';
+    document.getElementById('findPhotosBtn').disabled = false;
     document.getElementById('selfieInput').value = '';
-    document.getElementById('findPhotosBtn').disabled = true;
 }
 
 function findPhotosBySelfie() {
-    // Simulate AI face matching
     showScreen('matchedPhotosScreen');
-    
-    // Simulate loading photos (replace with actual API call)
-    setTimeout(() => {
-        const mockPhotos = generateMockPhotos(Math.floor(Math.random() * 10));
-        displayMatchedPhotos(mockPhotos);
-    }, 1000);
+    loadMatchedPhotos();
 }
 
-function displayMatchedPhotos(photos) {
+function loadMatchedPhotos() {
     const grid = document.getElementById('matchedPhotosGrid');
     const noPhotos = document.getElementById('noPhotos');
     const matchCount = document.getElementById('matchCount');
     
-    if (photos.length === 0) {
-        grid.style.display = 'none';
-        noPhotos.style.display = 'block';
-        matchCount.textContent = 'Found 0 photos with your face';
-    } else {
-        grid.style.display = 'grid';
-        noPhotos.style.display = 'none';
-        matchCount.textContent = `Found ${photos.length} photos with your face`;
-        
-        grid.innerHTML = photos.map(photo => `
-            <div class="photo-item" onclick="viewPhoto('${photo.url}')">
-                <img src="${photo.url}" alt="Matched Photo">
-                <div class="photo-overlay">
-                    <button onclick="event.stopPropagation(); downloadPhoto('${photo.url}')">
-                        <i class="fa-solid fa-download"></i>
-                    </button>
-                    <button onclick="event.stopPropagation(); sharePhoto('${photo.url}')">
-                        <i class="fa-solid fa-share"></i>
-                    </button>
-                </div>
-            </div>
-        `).join('');
-    }
-}
-
-// Code Submission
-function submitCode() {
-    const code = document.getElementById('codeInput').value.trim().toUpperCase();
+    grid.innerHTML = '';
     
-    if (!code) {
-        alert('Please enter a code');
+    if (!uploadedSelfie) {
+        grid.style.display = 'none';
+        noPhotos.style.display = 'flex';
+        matchCount.textContent = 'Found 0 photos';
+        
+        noPhotos.innerHTML = `
+            <i class="fa-solid fa-image-slash"></i>
+            <h3>Sorry, there are no photos of you</h3>
+            <p>Please upload a selfie first to find matching photos.</p>
+            <button class="btn-secondary" onclick="showSelfieUpload()">
+                Try Again
+            </button>
+        `;
         return;
     }
     
-    // Check if it's a profile code or event code
-    if (code.startsWith('EVT') || code.startsWith('WEDDING') || code.startsWith('PARTY')) {
-        // Event Code
-        loadEventPhotos(code);
-    } else {
-        // Profile Code
-        loadUserProfile(code);
-    }
-}
-
-function loadUserProfile(code) {
-    // Simulate loading user profile (replace with actual API call)
-    const profile = getUserProfile(code);
+    // Use shared data layer for AI face matching
+    const matchedPhotos = SharedData.findPhotosByFace(uploadedSelfie);
     
-    if (profile) {
-        document.getElementById('profileName').textContent = profile.name;
-        document.getElementById('profileEmail').textContent = profile.email;
-        document.getElementById('displayCode').textContent = code;
-        document.getElementById('photosFound').textContent = profile.photosFound;
-        document.getElementById('eventsAttended').textContent = profile.eventsAttended;
-        document.getElementById('memberSince').textContent = profile.memberSince;
+    if (matchedPhotos.length > 0) {
+        grid.style.display = 'grid';
+        noPhotos.style.display = 'none';
+        matchCount.textContent = `Found ${matchedPhotos.length} photos with your face`;
         
-        showScreen('profileScreen');
-        
-        // Load user's photos
-        const photos = generateMockPhotos(profile.photosFound);
-        displayProfilePhotos(photos);
-    } else {
-        alert('Invalid profile code. Please try again.');
-    }
-}
-
-function loadEventPhotos(code) {
-    // Simulate loading event (replace with actual API call)
-    const event = getEvent(code);
-    
-    if (event) {
-        document.getElementById('eventName').textContent = event.name;
-        document.getElementById('eventDate').textContent = event.date;
-        document.getElementById('eventLocation').textContent = event.location;
-        document.getElementById('totalPhotos').textContent = `${event.totalPhotos} Photos`;
-        document.getElementById('downloads').textContent = `${event.downloads} Downloads`;
-        
-        showScreen('eventPhotosScreen');
-        
-        // Load event photos
-        const photos = generateMockPhotos(event.totalPhotos);
-        displayEventPhotos(photos);
-    } else {
-        alert('Invalid event code. Please try again.');
-    }
-}
-
-function displayProfilePhotos(photos) {
-    const grid = document.getElementById('profilePhotosGrid');
-    grid.innerHTML = photos.map(photo => `
-        <div class="photo-item" onclick="viewPhoto('${photo.url}')">
-            <img src="${photo.url}" alt="Profile Photo">
-            <div class="photo-overlay">
-                <button onclick="event.stopPropagation(); downloadPhoto('${photo.url}')">
-                    <i class="fa-solid fa-download"></i>
-                </button>
-            </div>
-        </div>
-    `).join('');
-}
-
-function displayEventPhotos(photos) {
-    const grid = document.getElementById('eventPhotosGrid');
-    grid.innerHTML = photos.map(photo => `
-        <div class="photo-item" onclick="viewPhoto('${photo.url}')">
-            <img src="${photo.url}" alt="Event Photo">
-            <div class="photo-overlay">
-                <button onclick="event.stopPropagation(); downloadPhoto('${photo.url}')">
-                    <i class="fa-solid fa-download"></i>
-                </button>
-                <button onclick="event.stopPropagation(); sharePhoto('${photo.url}')">
-                    <i class="fa-solid fa-share"></i>
-                </button>
-            </div>
-        </div>
-    `).join('');
-}
-
-// Create Account
-function createAccount(event) {
-    event.preventDefault();
-    
-    const name = document.getElementById('userName').value;
-    const email = document.getElementById('userEmail').value;
-    const phone = document.getElementById('userPhone').value;
-    
-    // Generate unique code
-    const code = generateUniqueCode();
-    
-    // Save user profile (replace with actual API call)
-    const profile = {
-        code: code,
-        name: name,
-        email: email,
-        phone: phone,
-        memberSince: new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
-        photosFound: 0,
-        eventsAttended: 0
-    };
-    
-    localStorage.setItem(`profile_${code}`, JSON.stringify(profile));
-    
-    // Show success modal
-    document.getElementById('generatedCode').textContent = code;
-    document.getElementById('successModal').classList.add('active');
-}
-
-function closeSuccessModal() {
-    document.getElementById('successModal').classList.remove('active');
-    showScreen('welcomeScreen');
-}
-
-function updateSelfieFileName() {
-    const input = document.getElementById('accountSelfie');
-    const fileName = document.getElementById('selfieFileName');
-    if (input.files.length > 0) {
-        fileName.textContent = input.files[0].name;
-    }
-}
-
-// QR Code Scanner
-function scanQRCode() {
-    alert('QR Scanner will be integrated in the next update!');
-}
-
-// Photo Actions
-function viewPhoto(url) {
-    window.open(url, '_blank');
-}
-
-function downloadPhoto(url) {
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `photo_${Date.now()}.jpg`;
-    link.click();
-}
-
-function sharePhoto(url) {
-    if (navigator.share) {
-        navigator.share({
-            title: 'Check out this photo!',
-            url: url
+        matchedPhotos.forEach((photo, index) => {
+            const photoItem = document.createElement('div');
+            photoItem.className = 'photo-item';
+            photoItem.innerHTML = `
+                <img src="${photo.url}" alt="Photo ${index + 1}">
+                <div class="photo-overlay">
+                    <button onclick="downloadPhoto('${photo.id}')"><i class="fa-solid fa-download"></i></button>
+                    <button onclick="sharePhoto('${photo.id}')"><i class="fa-solid fa-share"></i></button>
+                </div>
+            `;
+            grid.appendChild(photoItem);
         });
     } else {
-        alert('Share feature not supported on this device');
+        grid.style.display = 'none';
+        noPhotos.style.display = 'flex';
+        matchCount.textContent = 'Found 0 photos';
+        
+        noPhotos.innerHTML = `
+            <i class="fa-solid fa-image-slash"></i>
+            <h3>Sorry, there are no photos of you in this event</h3>
+            <p>We couldn't find any photos matching your face. Try uploading a different selfie or check back later.</p>
+            <button class="btn-secondary" onclick="showSelfieUpload()">
+                Try Again
+            </button>
+        `;
     }
 }
 
+// Code Entry
+function submitCode() {
+    const code = document.getElementById('codeInput').value.trim().toUpperCase();
+    
+    // Use shared data layer to get event
+    const event = SharedData.getEventByCode(code);
+    
+    if (event) {
+        // Update event UI
+        document.getElementById('eventName').textContent = event.name || 'Event';
+        document.getElementById('eventDate').textContent = event.date || '';
+        document.getElementById('eventLocation').textContent = event.location || '';
+        
+        showScreen('eventPhotosScreen');
+        loadEventPhotos(event.code);
+    } else {
+        // For testing, still show event screen
+        showScreen('eventPhotosScreen');
+        loadEventPhotos();
+    }
+}
+
+function scanQRCode() {
+    showScreen('eventPhotosScreen');
+    loadEventPhotos();
+}
+
+function loadEventPhotos(eventCode = null) {
+    const grid = document.getElementById('eventPhotosGrid');
+    grid.innerHTML = '';
+    
+    // Use shared data layer to get event photos
+    const photos = eventCode ? SharedData.getEventPhotos(eventCode) : [];
+    
+    if (photos.length > 0) {
+        document.getElementById('totalPhotos').textContent = `${photos.length} Photos`;
+        
+        photos.forEach((photo, index) => {
+            const photoItem = document.createElement('div');
+            photoItem.className = 'photo-item';
+            photoItem.innerHTML = `
+                <img src="${photo.url}" alt="Event Photo ${index + 1}">
+                <div class="photo-overlay">
+                    <button onclick="downloadPhoto('${photo.id}')"><i class="fa-solid fa-download"></i></button>
+                    <button onclick="sharePhoto('${photo.id}')"><i class="fa-solid fa-share"></i></button>
+                </div>
+            `;
+            grid.appendChild(photoItem);
+        });
+    } else {
+        const noPhotosDiv = document.createElement('div');
+        noPhotosDiv.className = 'no-photos';
+        noPhotosDiv.style.display = 'flex';
+        noPhotosDiv.innerHTML = `
+            <i class="fa-solid fa-image-slash"></i>
+            <h3>Sorry, there are no photos of you</h3>
+            <p>There are no photos available for this event yet. Check back later!</p>
+            <button class="btn-secondary" onclick="goBack()">
+                Go Back
+            </button>
+        `;
+        grid.appendChild(noPhotosDiv);
+        document.getElementById('totalPhotos').textContent = '0 Photos';
+    }
+}
+
+function loadProfilePhotos() {
+    const grid = document.getElementById('profilePhotosGrid');
+    grid.innerHTML = '';
+    
+    // Use shared data layer to get user photos
+    const currentUser = SharedData.getCurrentUser();
+    const photos = currentUser ? SharedData.getUserPhotos(currentUser.id) : [];
+    
+    // Update stats
+    if (currentUser) {
+        document.getElementById('photosFound').textContent = photos.length;
+        document.getElementById('eventsAttended').textContent = currentUser.events?.length || 0;
+    }
+    
+    if (photos.length > 0) {
+        photos.forEach((photo, index) => {
+            const photoItem = document.createElement('div');
+            photoItem.className = 'photo-item';
+            photoItem.innerHTML = `
+                <img src="${photo.url}" alt="Profile Photo ${index + 1}">
+                <div class="photo-overlay">
+                    <button onclick="downloadPhoto('${photo.id}')"><i class="fa-solid fa-download"></i></button>
+                    <button onclick="sharePhoto('${photo.id}')"><i class="fa-solid fa-share"></i></button>
+                </div>
+            `;
+            grid.appendChild(photoItem);
+        });
+    } else {
+        const noPhotosDiv = document.createElement('div');
+        noPhotosDiv.className = 'no-photos';
+        noPhotosDiv.style.display = 'flex';
+        noPhotosDiv.innerHTML = `
+            <i class="fa-solid fa-image-slash"></i>
+            <h3>Sorry, there are no photos of you</h3>
+            <p>You don't have any photos yet. Upload a selfie or attend an event to get started!</p>
+            <button class="btn-secondary" onclick="goBack()">
+                Go Back
+            </button>
+        `;
+        grid.appendChild(noPhotosDiv);
+    }
+}
+
+// Profile Functions
 function copyCode() {
     const code = document.getElementById('displayCode').textContent;
-    navigator.clipboard.writeText(code);
-    alert('Code copied to clipboard!');
+    navigator.clipboard.writeText(code).then(() => {
+        alert('Code copied to clipboard!');
+    });
 }
 
 function viewMyPhotos() {
-    // Already showing photos in profile
-    document.getElementById('profilePhotosGrid').scrollIntoView({ behavior: 'smooth' });
+    showScreen('matchedPhotosScreen');
+    loadMatchedPhotos();
 }
 
 function editProfile() {
-    alert('Edit Profile feature coming soon!');
+    alert('Edit profile feature coming soon!');
 }
 
-// Helper Functions
-function generateUniqueCode() {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let code = '';
-    for (let i = 0; i < 8; i++) {
-        code += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return code;
+// Photo Actions
+function downloadPhoto(id) {
+    // TODO: Connect to backend download API
+    alert(`Downloading photo ${id}...`);
 }
 
-function getUserProfile(code) {
-    const stored = localStorage.getItem(`profile_${code}`);
-    if (stored) {
-        return JSON.parse(stored);
+function sharePhoto(id) {
+    // TODO: Connect to backend share API
+    alert(`Sharing photo ${id}...`);
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Mobile Dashboard loaded');
+    
+    // Check if user is already logged in
+    const currentUser = SharedData.getCurrentUser();
+    if (currentUser) {
+        console.log('User already logged in:', currentUser);
     }
     
-    // Mock data for testing
-    if (code === 'ABC12345') {
-        return {
-            name: 'Aayush Kumar',
-            email: 'aayush@example.com',
-            memberSince: 'Dec 2025',
-            photosFound: 42,
-            eventsAttended: 5
-        };
+    const findPhotosBtn = document.getElementById('findPhotosBtn');
+    if (findPhotosBtn) {
+        findPhotosBtn.disabled = false;
     }
-    return null;
-}
-
-function getEvent(code) {
-    // Mock event data
-    const events = {
-        'EVT12345': {
-            name: 'Summer Wedding 2025',
-            date: 'June 15, 2025',
-            location: 'Grand Hotel, New York',
-            totalPhotos: 245,
-            downloads: 156
-        },
-        'WEDDING2025': {
-            name: 'Sarah & John Wedding',
-            date: 'July 20, 2025',
-            location: 'Beach Resort, Miami',
-            totalPhotos: 320,
-            downloads: 234
-        }
-    };
-    return events[code] || null;
-}
-
-function generateMockPhotos(count) {
-    const photos = [];
-    for (let i = 0; i < count; i++) {
-        photos.push({
-            url: `https://picsum.photos/400/400?random=${i}`,
-            id: `photo_${i}`
-        });
-    }
-    return photos;
-}
+});

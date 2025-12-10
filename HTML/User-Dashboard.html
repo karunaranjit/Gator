@@ -3,68 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Dashboard - PhoGator</title>
-    <link rel="icon" type="image/png" href="../assets/images/logo.png">
+    <title>User Dashboard - PhoGator</title>
     <link rel="stylesheet" href="../CSS/User-Dashboard.css">
-    <link rel="stylesheet" href="../CSS/Footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" type="image/png" href="../assets/images/logo.png">
 </head>
 <body>
-    <!-- Custom Header for Dashboard -->
-    <header class="dashboard-header">
-        <nav class="navbar">
-            <div class="nav-container">
-                <a href="./Home.html" class="logo">
-                    <img src="../assets/images/logo.png" alt="PhoGator Logo">
-                    <span>PhoGator</span>
-                </a>
-                
-                <button class="home-btn" onclick="window.location.href='./Home.html'">
-                    <i class="fa-solid fa-home"></i>
-                    Home
-                </button>
-            </div>
-        </nav>
-    </header>
+    <div class="dashboard-container">
+        <!-- Home Button - Top Right Corner -->
+        <button class="btn-home-fixed" onclick="window.location.href='./Home.html'">
+            <i class="fa-solid fa-house"></i>
+            Home
+        </button>
 
-    <!-- User Dashboard -->
-    <section class="user-dashboard">
-        <div class="dashboard-container">
-            <!-- User Profile Header -->
-            <div class="profile-header">
-                <!-- Profile Info and Stats -->
-                <div class="profile-header-main">
-                    <div class="profile-info">
-                        <div class="profile-avatar">
-                            <img src="../assets/images/logo.png" alt="Aayush Sharma">
-                        </div>
-                        <div class="profile-details">
-                            <h1>Aayush Sharma</h1>
-                            <p class="profile-email">aayush@example.com</p>
-                            <p class="member-since">Member since Nov 2025</p>
-                        </div>
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar with Profile and Actions -->
+            <div class="top-bar">
+                <div class="profile-section">
+                    <div class="user-avatar">
+                        <img src="../assets/images/logo.png" alt="User Avatar">
                     </div>
-                    <div class="profile-stats">
-                        <div class="stat-item">
-                            <h3>47</h3>
-                            <p>Photos Found</p>
-                        </div>
-                        <div class="stat-item">
-                            <h3>3</h3>
-                            <p>Events Attended</p>
-                        </div>
-                        <div class="stat-item">
-                            <h3 id="userPhotoCode" style="color: #667eea; cursor: pointer;" onclick="copyPhotoCode()" title="Click to copy">
-                                A7K9M2
-                            </h3>
-                            <p>Your Photo Code</p>
-                        </div>
+                    <div class="user-info">
+                        <h2>Aayush Sharma</h2>
+                        <p class="user-email">aayush@example.com</p>
+                        <p class="member-since">Member since Nov 2025</p>
                     </div>
                 </div>
 
-                <!-- Bottom Actions -->
-                <div class="profile-bottom-actions">
-                    <button class="btn-book-event" onclick="window.location.href='./Occasions.html'">
+                <div class="stats-section">
+                    <div class="stat-item">
+                        <h3>0</h3>
+                        <p>Photos</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>0</h3>
+                        <p>Events</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>0</h3>
+                        <p>Favorites</p>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn-book-event">
                         <i class="fa-solid fa-plus"></i>
                         Book Event
                     </button>
@@ -76,13 +59,13 @@
             </div>
 
             <!-- Navigation Tabs -->
-            <div class="dashboard-tabs">
+            <div class="nav-tabs">
                 <button class="tab-btn active" onclick="showTab('photos')">
-                    <i class="fa-solid fa-image"></i>
+                    <i class="fa-solid fa-images"></i>
                     My Photos
                 </button>
                 <button class="tab-btn" onclick="showTab('events')">
-                    <i class="fa-solid fa-calendar"></i>
+                    <i class="fa-solid fa-calendar-days"></i>
                     Events
                 </button>
                 <button class="tab-btn" onclick="showTab('favorites')">
@@ -95,247 +78,135 @@
                 </button>
             </div>
 
-            <!-- Search and Filter -->
+            <!-- Search and Filter Bar -->
             <div class="search-filter-bar">
                 <div class="search-box">
                     <i class="fa-solid fa-search"></i>
                     <input type="text" placeholder="Search photos by event name...">
                 </div>
-                <div class="filter-actions">
-                    <button class="filter-btn">
-                        <i class="fa-solid fa-filter"></i>
-                        Filter
-                    </button>
-                    <button class="view-btn">
-                        <i class="fa-solid fa-th"></i>
-                        View
-                    </button>
-                </div>
-            </div>
-
-            <!-- My Photos Tab -->
-            <div class="tab-content" id="photosTab">
-                <div class="empty-state">
-                    <i class="fa-solid fa-image"></i>
-                    <h3>No Photos Yet</h3>
-                    <p>Your photos from events will appear here</p>
-                    <button class="btn-book-event" onclick="window.location.href='./Occasions.html'">
-                        <!-- <i class="fa-solid fa-plus"></i> -->
-                        <span>Book Your First Event</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Events Tab -->
-            <div class="tab-content" id="eventsTab" style="display: none;">
-                <div class="empty-state">
-                    <i class="fa-solid fa-calendar"></i>
-                    <h3>No Events Yet</h3>
-                    <p>Book an event to start capturing memories</p>
-                    <button class="btn-book-event" onclick="window.location.href='./Occasions.html'">
-                        <!-- <i class="fa-solid fa-plus"></i> -->
-                        <span>Book Your First Event</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Favorites Tab -->
-            <div class="tab-content" id="favoritesTab" style="display: none;">
-                <div class="empty-state">
-                    <i class="fa-solid fa-heart"></i>
-                    <h3>No Favorites Yet</h3>
-                    <p>Photos you favorite will appear here</p>
-                </div>
-            </div>
-
-            <!-- Downloads Tab -->
-            <div class="tab-content" id="downloadsTab" style="display: none;">
-                <div class="empty-state">
-                    <i class="fa-solid fa-download"></i>
-                    <h3>No Downloads Yet</h3>
-                    <p>Your downloaded photos will appear here</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Photo Modal -->
-    <div class="photo-modal" id="photoModal">
-        <div class="modal-content-photo">
-            <button class="modal-close-btn" onclick="closePhotoModal()">
-                <i class="fa-solid fa-times"></i>
-            </button>
-            <img id="modalImage" src="" alt="Full Size Photo">
-            <div class="modal-actions">
-                <button class="modal-action-btn modal-download-btn" onclick="downloadModalPhoto()">
-                    <i class="fa-solid fa-download"></i>
-                    Download Photo
+                <button class="filter-btn">
+                    <i class="fa-solid fa-filter"></i>
+                    Filter
                 </button>
-                <button class="modal-action-btn" onclick="closePhotoModal()">
-                    <i class="fa-solid fa-times"></i>
-                    Close
+                <button class="view-btn">
+                    <i class="fa-solid fa-grip"></i>
+                    View
                 </button>
             </div>
-        </div>
+
+            <!-- Tab Content -->
+            <div class="tab-content-area">
+                <!-- Photos/Overview Tab -->
+                <div id="photosTab" class="tab-content active">
+                    <div class="photos-grid">
+                        <!-- Photo items will be loaded here -->
+                    </div>
+                    <div class="empty-state">
+                        <i class="fa-solid fa-image"></i>
+                        <h3>No Photos Yet</h3>
+                        <p>Your photos from events will appear here</p>
+                    </div>
+                    <button class="load-more-btn" style="display: none;">Load More Photos</button>
+                </div>
+
+                <!-- Events Tab -->
+                <div id="eventsTab" class="tab-content">
+                    <div class="empty-state">
+                        <i class="fa-solid fa-calendar-xmark"></i>
+                        <h3>No Events Yet</h3>
+                        <p>Events you've attended will appear here</p>
+                    </div>
+                </div>
+
+                <!-- Favorites Tab -->
+                <div id="favoritesTab" class="tab-content">
+                    <div class="empty-state">
+                        <i class="fa-solid fa-heart-crack"></i>
+                        <h3>No Favorites Yet</h3>
+                        <p>Photos you favorite will appear here</p>
+                    </div>
+                </div>
+
+                <!-- Downloads Tab -->
+                <div id="downloadsTab" class="tab-content">
+                    <div class="empty-state">
+                        <i class="fa-solid fa-download"></i>
+                        <h3>No Downloads Yet</h3>
+                        <p>Downloaded photos will appear here</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Help Button -->
+        <button class="help-btn">
+            <i class="fa-solid fa-question"></i>
+        </button>
     </div>
 
     <!-- Settings Modal -->
-    <div class="settings-modal" id="settingsModal">
-        <div class="settings-modal-content">
-            <div class="settings-modal-header">
-                <h2>Settings</h2>
-                <button class="settings-close-btn" onclick="closeSettingsModal()">
-                    <i class="fa-solid fa-times"></i>
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fa-solid fa-gear"></i> Settings</h2>
+                <button class="close-modal" onclick="closeSettingsModal()">
+                    <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
-            
-            <div class="settings-options">
-                <div class="settings-option" onclick="openEditProfileModal()">
-                    <div class="settings-option-left">
-                        <div class="settings-option-icon">
-                            <i class="fa-solid fa-user"></i>
-                        </div>
-                        <div class="settings-option-text">
-                            <h4>Edit Profile</h4>
-                            <p>Update your personal information</p>
-                        </div>
+            <div class="modal-body">
+                <button class="settings-option" onclick="openEditProfileModal()">
+                    <i class="fa-solid fa-user-pen"></i>
+                    <div>
+                        <h3>Edit Profile</h3>
+                        <p>Update your personal information</p>
                     </div>
-                    <div class="settings-option-arrow">
-                        <i class="fa-solid fa-chevron-right"></i>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+                <button class="settings-option danger" onclick="deleteAccount()">
+                    <i class="fa-solid fa-trash"></i>
+                    <div>
+                        <h3>Delete Account</h3>
+                        <p>Permanently delete your account and data</p>
                     </div>
-                </div>
-
-                <div class="settings-option" onclick="alert('Change Password feature coming soon!')">
-                    <div class="settings-option-left">
-                        <div class="settings-option-icon">
-                            <i class="fa-solid fa-lock"></i>
-                        </div>
-                        <div class="settings-option-text">
-                            <h4>Change Password</h4>
-                            <p>Update your password</p>
-                        </div>
-                    </div>
-                    <div class="settings-option-arrow">
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </div>
-                </div>
-
-                <div class="settings-option" onclick="alert('Notification Settings feature coming soon!')">
-                    <div class="settings-option-left">
-                        <div class="settings-option-icon">
-                            <i class="fa-solid fa-bell"></i>
-                        </div>
-                        <div class="settings-option-text">
-                            <h4>Notifications</h4>
-                            <p>Manage notification preferences</p>
-                        </div>
-                    </div>
-                    <div class="settings-option-arrow">
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </div>
-                </div>
-
-                <div class="settings-option" onclick="alert('Privacy Settings feature coming soon!')">
-                    <div class="settings-option-left">
-                        <div class="settings-option-icon">
-                            <i class="fa-solid fa-shield"></i>
-                        </div>
-                        <div class="settings-option-text">
-                            <h4>Privacy & Security</h4>
-                            <p>Manage your privacy settings</p>
-                        </div>
-                    </div>
-                    <div class="settings-option-arrow">
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </div>
-                </div>
-
-                <div class="settings-option" onclick="alert('Help & Support feature coming soon!')">
-                    <div class="settings-option-left">
-                        <div class="settings-option-icon">
-                            <i class="fa-solid fa-question-circle"></i>
-                        </div>
-                        <div class="settings-option-text">
-                            <h4>Help & Support</h4>
-                            <p>Get help or contact support</p>
-                        </div>
-                    </div>
-                    <div class="settings-option-arrow">
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </div>
-                </div>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
             </div>
-
-            <button class="settings-logout-btn" onclick="logout()">
-                <i class="fa-solid fa-sign-out-alt"></i>
-                Logout
-            </button>
         </div>
     </div>
 
     <!-- Edit Profile Modal -->
-    <div class="settings-modal" id="editProfileModal">
-        <div class="settings-modal-content">
-            <div class="settings-modal-header">
-                <h2>Edit Profile</h2>
-                <button class="settings-close-btn" onclick="closeEditProfileModal()">
-                    <i class="fa-solid fa-times"></i>
+    <div id="editProfileModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fa-solid fa-user-pen"></i> Edit Profile</h2>
+                <button class="close-modal" onclick="closeEditProfileModal()">
+                    <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
-            
-            <div class="edit-profile-options">
-                <div class="edit-profile-section">
-                    <label for="editName">Full Name</label>
-                    <div class="input-group">
-                        <i class="fa-solid fa-user"></i>
-                        <input type="text" id="editName" value="Aayush Sharma" placeholder="Enter your name">
+            <div class="modal-body">
+                <div class="profile-pic-section">
+                    <img src="../assets/images/logo.png" alt="Profile" id="editProfilePic">
+                    <div class="pic-actions">
+                        <label for="uploadPic" class="upload-btn">
+                            <i class="fa-solid fa-camera"></i>
+                            Change Photo
+                        </label>
+                        <input type="file" id="uploadPic" accept="image/*" style="display: none;" onchange="previewProfilePicture(event)">
+                        <button class="remove-btn" onclick="removeProfilePicture()">
+                            <i class="fa-solid fa-trash"></i>
+                            Remove
+                        </button>
                     </div>
                 </div>
-
-                <div class="edit-profile-section">
-                    <label for="editEmail">Email Address</label>
-                    <div class="input-group">
-                        <i class="fa-solid fa-envelope"></i>
-                        <input type="email" id="editEmail" value="aayush@example.com" placeholder="Enter your email">
-                    </div>
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="editName" value="Aayush Sharma">
                 </div>
-
-                <div class="edit-profile-section">
-                    <label>Profile Picture</label>
-                    <div class="profile-picture-upload">
-                        <div class="current-profile-pic">
-                            <img src="../assets/images/logo.png" alt="Profile Picture" id="editProfilePic">
-                        </div>
-                        <div class="upload-actions">
-                            <label for="uploadNewPic" class="upload-btn">
-                                <i class="fa-solid fa-camera"></i>
-                                Change Picture
-                                <input type="file" id="uploadNewPic" accept="image/*" onchange="previewProfilePicture(event)" style="display: none;">
-                            </label>
-                            <button class="remove-pic-btn" onclick="removeProfilePicture()">
-                                <i class="fa-solid fa-trash"></i>
-                                Remove
-                            </button>
-                        </div>
-                    </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="editEmail" value="aayush@example.com">
                 </div>
-
-                <div class="edit-profile-section danger-zone">
-                    <label>Danger Zone</label>
-                    <button class="delete-account-btn" onclick="deleteAccount()">
-                        <i class="fa-solid fa-trash-alt"></i>
-                        Delete Account
-                    </button>
-                    <p class="warning-text">
-                        <i class="fa-solid fa-exclamation-triangle"></i>
-                        Once you delete your account, there is no going back. Please be certain.
-                    </p>
-                </div>
-            </div>
-
-            <div class="edit-profile-actions">
-                <button class="cancel-btn" onclick="closeEditProfileModal()">Cancel</button>
-                <button class="save-changes-btn" onclick="saveProfileChanges()">
+                <button class="save-btn" onclick="saveProfileChanges()">
                     <i class="fa-solid fa-check"></i>
                     Save Changes
                 </button>
@@ -343,299 +214,6 @@
         </div>
     </div>
 
-    <!-- Include Footer -->
-    <div id="footer"></div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Load Header
-            fetch('./Header.html')
-                .then(response => response.text())
-                .then(data => document.getElementById('header').innerHTML = data);
-
-            // Load Footer
-            fetch('./Footer.html')
-                .then(response => response.text())
-                .then(data => document.getElementById('footer').innerHTML = data);
-            
-            // Check if user code is passed via URL
-            const urlParams = new URLSearchParams(window.location.search);
-            const userCode = urlParams.get('code');
-            
-            if (userCode) {
-                loadUserDashboard(userCode);
-            } else {
-                // Load default/device-based profile
-                loadUserPhotoCode();
-            }
-        });
-
-        function loadUserDashboard(userCode) {
-            // Get user profiles from localStorage
-            const storedProfiles = JSON.parse(localStorage.getItem('userProfiles') || '{}');
-            
-            // Merge with default profiles
-            const userProfiles = {
-                'ABC12345': {
-                    name: 'Aayush Sharma',
-                    email: 'aayush@example.com',
-                    memberSince: 'Nov 2025',
-                    photosFound: 47,
-                    eventsAttended: 3
-                },
-                'XYZ67890': {
-                    name: 'John Doe',
-                    email: 'john@example.com',
-                    memberSince: 'Dec 2025',
-                    photosFound: 32,
-                    eventsAttended: 2
-                },
-                ...storedProfiles
-            };
-            
-            const profile = userProfiles[userCode];
-            
-            if (profile) {
-                // Update dashboard with real user data
-                document.querySelector('.profile-details h2').textContent = profile.name;
-                document.querySelector('.profile-details p').textContent = profile.email;
-                document.querySelector('.profile-member-since').textContent = `Member since ${profile.memberSince}`;
-                document.getElementById('userPhotoCode').textContent = userCode;
-                
-                // Update stats
-                const statItems = document.querySelectorAll('.stat-item h3');
-                if (statItems.length >= 3) {
-                    statItems[0].textContent = profile.photosFound;
-                    statItems[1].textContent = profile.eventsAttended;
-                }
-                
-                // Store in localStorage
-                localStorage.setItem('currentUserCode', userCode);
-                localStorage.setItem('userName', profile.name);
-                localStorage.setItem('userEmail', profile.email);
-            }
-        }
-
-        // Generate permanent unique code based on device fingerprint
-        function generatePermanentCode() {
-            // Use navigator properties to create a semi-unique fingerprint
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            ctx.textBaseline = 'top';
-            ctx.font = '14px Arial';
-            ctx.fillText('fingerprint', 2, 2);
-            const canvasData = canvas.toDataURL();
-            
-            const fingerprint = navigator.userAgent + 
-                              navigator.language + 
-                              screen.width + 
-                              screen.height + 
-                              new Date().getTimezoneOffset() +
-                              canvasData;
-            
-            // Create hash from fingerprint
-            let hash = 0;
-            for (let i = 0; i < fingerprint.length; i++) {
-                const char = fingerprint.charCodeAt(i);
-                hash = ((hash << 5) - hash) + char;
-                hash = hash & hash;
-            }
-            
-            // Convert hash to alphanumeric code
-            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let code = '';
-            let tempHash = Math.abs(hash);
-            
-            for (let i = 0; i < 8; i++) {
-                code += chars[tempHash % chars.length];
-                tempHash = Math.floor(tempHash / chars.length);
-            }
-            
-            return code;
-        }
-
-        function loadUserPhotoCode() {
-            let userCode = localStorage.getItem('userPhotoCode');
-            
-            if (!userCode) {
-                // Generate permanent code
-                userCode = generatePermanentCode();
-                localStorage.setItem('userPhotoCode', userCode);
-                
-                // Set member since date
-                const memberSince = new Date().toLocaleDateString('en-US', { 
-                    year: 'numeric', 
-                    month: 'short'
-                });
-                localStorage.setItem('memberSince', memberSince);
-                
-                console.log('✅ NEW USER CODE CREATED:', userCode);
-            } else {
-                console.log('✅ EXISTING USER CODE LOADED:', userCode);
-            }
-            
-            // Update UI with the code
-            document.getElementById('userPhotoCode').textContent = userCode;
-            
-            return userCode;
-        }
-
-        function copyPhotoCode() {
-            const code = document.getElementById('userPhotoCode').textContent;
-            
-            // Show warning before copying
-            if (confirm('⚠️ WARNING: If you share this code with others, they will have access to your profile and all your photos.\n\nAre you sure you want to copy this code?')) {
-                navigator.clipboard.writeText(code).then(() => {
-                    alert('✅ Photo code copied: ' + code + '\n\n⚠️ Keep this code private!\n\nUse this code in the Mobile Access page to view your photos.');
-                }).catch(() => {
-                    // Fallback for older browsers
-                    const textArea = document.createElement('textarea');
-                    textArea.value = code;
-                    document.body.appendChild(textArea);
-                    textArea.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(textArea);
-                    alert('✅ Photo code copied: ' + code + '\n\n⚠️ Keep this code private!');
-                });
-            }
-        }
-
-        function showTab(tabName) {
-            // Hide all tab contents
-            const tabContents = document.querySelectorAll('.tab-content');
-            tabContents.forEach(content => content.style.display = 'none');
-            
-            // Remove active class from all tabs
-            const tabs = document.querySelectorAll('.tab-btn');
-            tabs.forEach(tab => tab.classList.remove('active'));
-            
-            // Show selected tab and mark button as active
-            event.target.closest('.tab-btn').classList.add('active');
-            document.getElementById(tabName + 'Tab').style.display = 'block';
-        }
-
-        function closePhotoModal() {
-            const modal = document.getElementById('photoModal');
-            modal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        function downloadModalPhoto() {
-            const modalImg = document.getElementById('modalImage');
-            const link = document.createElement('a');
-            link.href = modalImg.src;
-            link.download = 'phogator_photo.jpg';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            alert('Photo downloaded successfully! 🎉');
-        }
-
-        function openSettingsModal() {
-            const modal = document.getElementById('settingsModal');
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeSettingsModal() {
-            const modal = document.getElementById('settingsModal');
-            modal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        function openEditProfileModal() {
-            closeSettingsModal();
-            const modal = document.getElementById('editProfileModal');
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeEditProfileModal() {
-            const modal = document.getElementById('editProfileModal');
-            modal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        function previewProfilePicture(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('editProfilePic').src = e.target.result;
-                }
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function removeProfilePicture() {
-            if (confirm('Are you sure you want to remove your profile picture?')) {
-                document.getElementById('editProfilePic').src = '../assets/images/logo.png';
-                alert('Profile picture removed!');
-            }
-        }
-
-        function saveProfileChanges() {
-            const name = document.getElementById('editName').value;
-            const email = document.getElementById('editEmail').value;
-            
-            if (!name || !email) {
-                alert('Please fill in all required fields!');
-                return;
-            }
-
-            // Update profile header
-            document.querySelector('.profile-details h1').textContent = name;
-            document.querySelector('.profile-email').textContent = email;
-            
-            alert('Profile updated successfully! ✅');
-            closeEditProfileModal();
-        }
-
-        function deleteAccount() {
-            const confirmed = confirm('⚠️ WARNING: This action cannot be undone!\n\nAre you absolutely sure you want to delete your account?\n\nAll your data, photos, and events will be permanently deleted.');
-            
-            if (confirmed) {
-                const doubleConfirm = prompt('Type "DELETE" to confirm account deletion:');
-                if (doubleConfirm === 'DELETE') {
-                    alert('Account deleted successfully. Redirecting to home page...');
-                    window.location.href = './Home.html';
-                } else {
-                    alert('Account deletion cancelled.');
-                }
-            }
-        }
-
-        function logout() {
-            if (confirm('Are you sure you want to logout?')) {
-                alert('Logging out...');
-                window.location.href = './Home.html';
-            }
-        }
-
-        // Close modal when clicking outside
-        document.getElementById('photoModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closePhotoModal();
-            }
-        });
-
-        document.addEventListener('click', function(e) {
-            if (e.target.id === 'settingsModal') {
-                closeSettingsModal();
-            }
-            if (e.target.id === 'editProfileModal') {
-                closeEditProfileModal();
-            }
-        });
-
-        // Close modal with Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closePhotoModal();
-                closeSettingsModal();
-                closeEditProfileModal();
-            }
-        });
-    </script>
+    <script src="../JS/user-dashboard.js"></script>
 </body>
 </html>
